@@ -1,0 +1,12 @@
+novelai_token: []
+use_token: 0
+proxy:
+  enable: false
+  host: 127.0.0.1
+  port: 7890
+sdapi:
+  url: ""
+  token: ""
+translate:
+  appid: ""
+  appkey: ""
