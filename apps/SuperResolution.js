@@ -28,7 +28,7 @@ export class superResolution extends plugin {
 
     async superResolution(e) {
         if (!e.img) return await e.reply('请将图片连同指令一起发送')
-        else await e.reply('正在释放大清晰术~')
+        else await e.reply('正在释放大清晰术，请稍作等待~')
         // e.img[0] = 'https://' + e.img[0].replace(/https:\/\//g, '')
         let image = await url2Base64(e.img[0])
         // 发送请求

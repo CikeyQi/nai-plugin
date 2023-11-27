@@ -28,6 +28,7 @@ export class appreciate extends plugin {
         if (!e.img) return e.reply('请将图片连同指令一起发送')
         let base64 = await url2Base64(e.img[0])
         let config = Config.getConfig()
+        await e.reply('正在鉴赏图片，请稍作等待~')
         const response = await axios.post(config.sdapi.url + "/sdapi/v1/png-info", {
             image: "data:image/png;base64," + base64,
         }, {

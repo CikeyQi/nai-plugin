@@ -48,8 +48,10 @@ export class userInfo extends plugin {
     }
     msg += '已配置' + tokenList.length + '个Token\n';
 
-    for (const token of tokenList) {
-      headers['authorization'] = 'Bearer ' + token;
+    await e.reply('正在查询中，预计10s，请稍后...');
+
+    const requests = tokenList.map(async (token) => {
+      let headers = { 'authorization': 'Bearer ' + token };
       let response = await axios.get(url, {
         headers: headers,
         httpsAgent: agent
@@ -72,9 +74,11 @@ export class userInfo extends plugin {
       msg += '├ 到期时间：' + expiresAt + '\n';
       msg += '├ 固定剩余点数：' + fixedTrainingStepsLeft + '\n';
       msg += '└ 购买的点数：' + purchasedTrainingSteps + '\n';
-    }
+    });
+
+    await Promise.all(requests);
 
     e.reply(msg);
     return true;
   }
-}
+}  

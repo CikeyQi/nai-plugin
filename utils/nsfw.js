@@ -1,14 +1,12 @@
 import axios from "axios";
-import Config from "../components/Config.js";
 /**
  * 检查图片是否为NSFW
  * @param {*} base64 图片base64
  * @returns {nsfw: boolean, nsfwMsg: string} nsfw: 是否为NSFW, nsfwMsg: NSFW类型
  */
 export async function nsfwCheck(base64) {
-    let config = await Config.getConfig();
     let response = await axios.post(
-        "http://110.41.175.145:13490/run/predict",
+        "https://smilingwolf-wd-v1-4-tags.hf.space/run/predict",
         {
             data: [
                 "data:image/png;base64," + base64,
