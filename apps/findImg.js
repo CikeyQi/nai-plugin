@@ -35,7 +35,7 @@ export class find extends plugin {
             e.reply('没有找到ID为[' + num + ']的图片')
             return true
         }
-        let base64 = fs.readFileSync(pluginResources + '/' + user + '/' + num + '.', 'base64')
+        let base64 = fs.readFileSync(pluginResources + '/' + user + '/' + num + '.png', 'base64')
         await e.reply('找到了ID为[' + num + ']的图片，正在发送中，请稍等')
         await e.reply(segment.image("base64://" + base64))
         return true
