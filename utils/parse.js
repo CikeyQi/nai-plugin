@@ -30,12 +30,12 @@ function scaleParam(text) {
         parameters = { height: height, width: width }
         text = text.replace(/(\d{2,4})\*(\d{2,4})/g, '')
     }
-    if (!parameters) {
-        // 随机抽一个尺寸
-        const keys = Object.keys(scale)
-        const randomKey = keys[Math.floor(Math.random() * keys.length)]
-        parameters = scale[randomKey]
-    }
+    // if (!parameters) {
+    //     // 随机抽一个尺寸
+    //     const keys = Object.keys(scale)
+    //     const randomKey = keys[Math.floor(Math.random() * keys.length)]
+    //     parameters = scale[randomKey]
+    // }
     return { parameters, text }
 }
 function samplerParam(text) {
@@ -103,7 +103,6 @@ async function promptParam(text) {
     if (ntags) {
         parameters.negative_prompt = ntags
     }
-    logger.warn((input === '') ? { parameters } : { parameters, input })
     return (input === '') ? { parameters } : { parameters, input }
 }
 export async function handleParam(e, text) {
