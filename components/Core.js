@@ -74,8 +74,8 @@ const defaultParam = {
     "model": "nai-diffusion-3", // 模型
     "action": "generate", // 动作
     "parameters": {
-      "width": 1216, // 宽度
-      "height": 832, // 高度
+      "width": 832, // 宽度
+      "height": 1216, // 高度
       "scale": 5, // 提示词引导系数
       "sampler": "k_euler", // 采样方法
       "steps": 28, // 迭代步数
