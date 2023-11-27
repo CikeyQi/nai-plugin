@@ -85,11 +85,14 @@ async function promptParam(text) {
                 let result = await baiduTranslate(wordList[i].trim())
                 if (result.status){
                     wordList[i] = result.msg
+                } else {
+                    wordList[i] = null
                 }
             } catch (error) {
                 throw error
             }
         }
+        wordList = wordList.filter(item => item !== null)
         return wordList.join(',')
     }
     try {
