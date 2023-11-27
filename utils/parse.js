@@ -77,12 +77,15 @@ async function promptParam(text) {
         input = text
     }
     async function translator(wordText) {
-        let wordList = wordText.split(/[,，\s]+/)
+        let wordList = wordText.split(/[,，]+/)
         console.log(wordList)
         for (let i = 0; i < wordList.length; i++) {
             if (!wordList[i].match(/[\u4e00-\u9fa5]/g)) continue
             try {
-                wordList[i] = await baiduTranslate(wordList[i].trim())
+                let result = await baiduTranslate(wordList[i].trim())
+                if (result.status){
+                    wordList[i] = result.msg
+                }
             } catch (error) {
                 throw error
             }
@@ -100,6 +103,7 @@ async function promptParam(text) {
     if (ntags) {
         parameters.negative_prompt = ntags
     }
+    logger.warn((input === '') ? { parameters } : { parameters, input })
     return (input === '') ? { parameters } : { parameters, input }
 }
 export async function handleParam(e, text) {
