@@ -8,13 +8,13 @@ import Config from "../components/Config.js";
 export async function nsfwCheck(base64) {
     let config = Config.getConfig()
     let response = await axios.post(
-        config.wd_tagger,
+        config.wd_tagger + "/run/predict",
         {
             data: [
                 "data:image/png;base64," + base64,
                 "MOAT",
                 0.35,
-                0.85, 
+                0.85,
             ]
         },
     );
