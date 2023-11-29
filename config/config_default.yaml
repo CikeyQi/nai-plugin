@@ -10,3 +10,5 @@ sdapi:
 translate:
   appid: ""
   appkey: ""
+wd_tagger:  ""
+nsfw_switcher: false

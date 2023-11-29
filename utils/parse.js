@@ -58,13 +58,22 @@ function samplerParam(text) {
 }
 function seedParam(text) {
     let parameters = {}
-    let seed = text.match(/seed(\s)?=(\d{1,10})$/)?.[2]
+    let seed = text.match(/seed(\s)?=(\d{1,10})/)?.[2]
     if (seed) {
         parameters.seed = Number(seed)
     } else {
         parameters.seed = Math.floor((Math.random() + Math.floor(Math.random() * 9 + 1)) * Math.pow(10, 9))
     }
-    text = text.replace(/seed(\s)?=(\d{1,10})$/g, '')
+    text = text.replace(/seed(\s)?=(\d{1,10})/g, '')
+    return { parameters, text }
+}
+function SMEAParam(text) {
+    let parameters = {}
+    if (text.match(/smea/i)) {
+        parameters.sm = true
+        parameters.sm_dyn = true
+        text = text.replace(/smea/i, '')
+    }
     return { parameters, text }
 }
 async function promptParam(text) {
@@ -121,6 +130,10 @@ export async function handleParam(e, text) {
     text = result.text
     // 种子处理
     result = seedParam(text)
+    parameters = Object.assign(parameters, result.parameters)
+    text = result.text
+    // SMEA处理
+    result = SMEAParam(text)
     parameters = Object.assign(parameters, result.parameters)
     text = result.text
     // 正负词条处理及翻译

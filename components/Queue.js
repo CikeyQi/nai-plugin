@@ -1,6 +1,7 @@
 import EventEmitter from 'events'
 import Log from '../utils/logs.js'
 import getPicture from './Core.js'
+import { nsfwCheck } from '../utils/nsfw.js'
 
 class taskQueue extends EventEmitter {
     // length为队列最大长度
@@ -38,8 +39,13 @@ class taskQueue extends EventEmitter {
         let task = this.dequeue()
         try {
             let picInfo = await getPicture(task.param, task.user, task.type)
-            await task.e.reply('您的图片已经生成好了，正在发送中，稍等一下哦~\n本次图片ID为：' + picInfo.fileName)
-            await task.e.reply(segment.image("base64://" + picInfo.base64))
+            let { nsfw, nsfwMsg } = await nsfwCheck(picInfo.base64)
+            if (nsfw) {
+                await task.e.reply("您的图片已经生成好了，但是由于图片内容" + nsfwMsg + "，已被拦截")
+            } else {
+                await task.e.reply('您的图片已经生成好了，正在发送中，稍等一下哦~\n本次图片ID为：' + picInfo.fileName)
+                await task.e.reply(segment.image("base64://" + picInfo.base64))
+            }
         } catch (error) {
             Log.e(error)
             task.e.reply('出错啦，请联系开发者')

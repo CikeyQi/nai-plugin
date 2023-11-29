@@ -12,15 +12,15 @@ export default async function download(data, user, filename) {
         user = user.toString();
     }
     user = user.replace(/:/g, "-")
-    console.log(`${pluginResources}/${user}/${filename}.zip`)
-    if (!fs.existsSync(`${pluginResources}/${user}`)) {
-        fs.mkdirSync(`${pluginResources}/${user}`);
+    console.log(`${pluginResources}/userPic/${user}/${filename}.zip`)
+    if (!fs.existsSync(`${pluginResources}/userPic/${user}`)) {
+        fs.mkdirSync(`${pluginResources}/userPic/${user}`);
     }
-    await fs.writeFileSync(`${pluginResources}/${user}/${filename}.zip`, data);
+    await fs.writeFileSync(`${pluginResources}/userPic/${user}/${filename}.zip`, data);
     // 解压zip，取出image_0.png放在同级目录，重命名为filename.png，删除zip
-    const zip = new admzip(`${pluginResources}/${user}/${filename}.zip`);
-    zip.extractAllTo(`${pluginResources}/${user}`, true);
-    fs.unlinkSync(`${pluginResources}/${user}/${filename}.zip`);
-    fs.renameSync(`${pluginResources}/${user}/image_0.png`, `${pluginResources}/${user}/${filename}.png`);
-    return `${pluginResources}/${user}/${filename}.png`
+    const zip = new admzip(`${pluginResources}/userPic/${user}/${filename}.zip`);
+    zip.extractAllTo(`${pluginResources}/userPic/${user}`, true);
+    fs.unlinkSync(`${pluginResources}/userPic/${user}/${filename}.zip`);
+    fs.renameSync(`${pluginResources}/userPic/${user}/image_0.png`, `${pluginResources}/${user}/${filename}.png`);
+    return `${pluginResources}/userPic/${user}/${filename}.png`
 }
