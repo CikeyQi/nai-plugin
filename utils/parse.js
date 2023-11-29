@@ -68,9 +68,9 @@ function seedParam(text) {
 function stepsParam(text) {
     let config = Config.getConfig()
     let parameters = {}
-    let step = text.match(/步数\s?(\d+)/)?.[1]
+    let steps = text.match(/步数\s?(\d+)/)?.[1]
     const maxStep = config.free_mode ? 28 : 50
-    parameters.step = step ? Math.min(Math.max(1, Number(step)), maxStep) : 28
+    parameters.steps = steps ? Math.min(Math.max(1, Number(step)), maxStep) : 28
     text = text.replace(/步数\s?\d+/g, '')
     return { parameters, text }
 }
