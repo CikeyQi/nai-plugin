@@ -1,43 +1,40 @@
 import { baiduTranslate } from './translate.js'
+import Config from '../components/Config.js'
 // 尺寸处理
 function scaleParam(text) {
     const scale = {
-        "竖图": { height: 1216, width: 832 },
-        "长图": { height: 1216, width: 832 },
-        "宽图": { height: 832, width: 1216 },
-        "横图": { height: 832, width: 1216 },
-        "方图": { height: 1024, width: 1024 },
-    }
-    let parameters = null
+      "竖图": { height: 1216, width: 832 },
+      "长图": { height: 1216, width: 832 },
+      "宽图": { height: 832, width: 1216 },
+      "横图": { height: 832, width: 1216 },
+      "方图": { height: 1024, width: 1024 }
+    };
+  
+    let parameters = null;
+  
     Object.entries(scale).forEach(([size, dimensions]) => {
-        if (text.includes(size)) {
-            parameters = { ...Object.assign(dimensions) }
-            text = text.replace(new RegExp(size, 'g'), '')
-        }
-    })
-    const result = /(\d{2,7})\*(\d{2,7})/.exec(text)
+      if (text.includes(size)) {
+        parameters = { ...dimensions };
+        text = text.replace(new RegExp(size, 'g'), '');
+      }
+    });
+  
+    const result = /(\d{2,7})[\*×](\d{2,7})/.exec(text);
     if (result) {
-        let [width, height] = [Math.floor(Number(result[1]) / 64) * 64, Math.floor(Number(result[2]) / 64) * 64]
-        let toggle = true
-        while (width * height > 1048576) {
-            if (toggle && width > 64) {
-                width -= 64
-            } else if (!toggle && height > 64) {
-                height -= 64
-            }
-            toggle = !toggle
-        }
-        parameters = { height: height, width: width }
-        text = text.replace(/(\d{2,4})\*(\d{2,4})/g, '')
+      let [width, height] = [Math.floor(Number(result[1]) / 64) * 64, Math.floor(Number(result[2]) / 64) * 64];
+      const maxArea = config.free_mode ? 1048576 : 3145728;
+  
+      while (width * height > maxArea && (width > 64 || height > 64)) {
+        width -= width > 64 ? 64 : 0;
+        height -= height > 64 ? 64 : 0;
+      }
+  
+      parameters = { height, width };
+      text = text.replace(/(\d{2,4})[\*×](\d{2,4})/g, '');
     }
-    // if (!parameters) {
-    //     // 随机抽一个尺寸
-    //     const keys = Object.keys(scale)
-    //     const randomKey = keys[Math.floor(Math.random() * keys.length)]
-    //     parameters = scale[randomKey]
-    // }
-    return { parameters, text }
-}
+  
+    return { parameters, text };
+  }
 function samplerParam(text) {
     const samplers = {
         'Euler': 'k_euler',
@@ -67,6 +64,15 @@ function seedParam(text) {
     text = text.replace(/seed(\s)?=(\d{1,10})/g, '')
     return { parameters, text }
 }
+function stepsParam(text) {
+    let config = Config.getConfig()
+    let parameters = {}
+    let step = text.match(/步数\s?(\d+)/)?.[1]
+    const maxStep = config.free_mode ? 28 : 50
+    parameters.step = step ? Math.min(Math.max(1, Number(step)), maxStep) : 28
+    text = text.replace(/步数\s?\d+/g, '')
+    return { parameters, text }
+}
 function SMEAParam(text) {
     let parameters = {}
     if (text.match(/smea/i)) {
@@ -92,7 +98,7 @@ async function promptParam(text) {
             if (!wordList[i].match(/[\u4e00-\u9fa5]/g)) continue
             try {
                 let result = await baiduTranslate(wordList[i].trim())
-                if (result.status){
+                if (result.status) {
                     wordList[i] = result.msg
                 } else {
                     wordList[i] = null

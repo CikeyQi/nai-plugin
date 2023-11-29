@@ -12,3 +12,4 @@ translate:
   appkey: ""
 wd_tagger:  ""
 nsfw_check: false
+free_mode: true
