@@ -2,6 +2,7 @@ import { baiduTranslate } from './translate.js'
 import Config from '../components/Config.js'
 // 尺寸处理
 function scaleParam(text) {
+    let config = Config.getConfig()
     const scale = {
       "竖图": { height: 1216, width: 832 },
       "长图": { height: 1216, width: 832 },
@@ -132,6 +133,10 @@ export async function handleParam(e, text) {
     text = result.text
     // 采样处理
     result = samplerParam(text)
+    parameters = Object.assign(parameters, result.parameters)
+    text = result.text
+    // 步数处理
+    result = stepsParam(text)
     parameters = Object.assign(parameters, result.parameters)
     text = result.text
     // 种子处理
