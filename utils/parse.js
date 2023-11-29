@@ -70,7 +70,7 @@ function stepsParam(text) {
     let parameters = {}
     let steps = text.match(/步数\s?(\d+)/)?.[1]
     const maxStep = config.free_mode ? 28 : 50
-    parameters.steps = steps ? Math.min(Math.max(1, Number(step)), maxStep) : 28
+    parameters.steps = steps ? Math.min(Math.max(1, Number(steps)), maxStep) : 28
     text = text.replace(/步数\s?\d+/g, '')
     return { parameters, text }
 }
