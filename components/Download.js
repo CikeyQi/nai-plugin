@@ -21,6 +21,6 @@ export default async function download(data, user, filename) {
     const zip = new admzip(`${pluginResources}/userPic/${user}/${filename}.zip`);
     zip.extractAllTo(`${pluginResources}/userPic/${user}`, true);
     fs.unlinkSync(`${pluginResources}/userPic/${user}/${filename}.zip`);
-    fs.renameSync(`${pluginResources}/userPic/${user}/image_0.png`, `${pluginResources}/${user}/${filename}.png`);
+    fs.renameSync(`${pluginResources}/userPic/${user}/image_0.png`, `${pluginResources}/userPic/${user}/${filename}.png`);
     return `${pluginResources}/userPic/${user}/${filename}.png`
 }
