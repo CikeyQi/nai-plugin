@@ -105,7 +105,7 @@ pnpm restart
 搭建Stable Diffusioin API方法: <a href="https://ap-plugin.com/Config/docs2">绘图API部署文档</a>
 
 ### 鉴黄和鉴赏图片API部署文档
-搭建Stable Diffusioin API方法: <a href="https://ap-plugin.com/Config/docs4">鉴赏API部署文档</a>
+搭建鉴赏API方法: <a href="https://ap-plugin.com/Config/docs4">鉴赏API部署文档</a>
 
 ---
 
