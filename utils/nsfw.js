@@ -19,7 +19,7 @@ export async function nsfwCheck(base64) {
         },
     );
     let data = {
-        nsfw: response.data.data[2].label == "explicit" || response.data.data[2].label == "questionable" || response.data.data[2].label == "sensitive" ? true : false,
+        nsfw: response.data.data[2].label == "explicit" || response.data.data[2].label == "questionable" ? true : false,
         nsfwMsg: response.data.data[2].label == "explicit" ? "色情/露骨内容" : response.data.data[2].label == "questionable" ? "强烈性暗示/可疑内容" : response.data.data[2].label == "sensitive" ? "轻微性暗示/敏感内容" : "大众级/普通内容",
     }
     return data;
