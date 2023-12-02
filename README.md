@@ -215,6 +215,6 @@ free_mode: true
 
 ## 我们
 
-<a href="https://github.com/ap-plugin/mj-plugin/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=ap-plugin/mj-plugin" />
+<a href="https://github.com/CikeyQi/nai-plugin/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=CikeyQi/nai-plugin" />
 </a>
