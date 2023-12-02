@@ -71,7 +71,6 @@ export class userInfo extends plugin {
         let purchasedTrainingSteps = data.subscription.trainingStepsLeft.purchasedTrainingSteps;
 
         // 组合消息
-        let msg = '';
         msg += '\n';
         msg += '┌ 订阅状态：' + subscription + '\n';
         msg += '├ 订阅挡位：' + tier + '\n';
