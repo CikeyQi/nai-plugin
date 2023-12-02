@@ -84,6 +84,9 @@ pnpm restart
 ## 配置参数
 
 ### 获取 token
+
+<div align="center" style='font-size:50px;'>请确保你的NovelAI账号已订阅绘图</div>
+
 #### 方法一(推荐,获取一次长期使用)
  1. 登录 [NovelAI/login](https://novelai.net/login)
  2. 打开 [NovelAI/stories](https://novelai.net/stories)
