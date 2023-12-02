@@ -86,7 +86,7 @@ pnpm restart
 ### 获取 token
 #### 方法一(推荐,获取一次长期使用)
  1. 登录 [NovelAI/login](https://novelai.net/login)
- 2. 打开 [NovelAI/sotries](https://novelai.net/stories)
+ 2. 打开 [NovelAI/stories](https://novelai.net/stories)
  3. 复制token</br><img src="./resources/readme/tokenstep.gif" width="100%" height="100%" alt="get_token">
 </br>
 
