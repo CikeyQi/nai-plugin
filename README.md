@@ -104,8 +104,12 @@ pnpm restart
 ### Stable Diffusioin API搭建
 搭建Stable Diffusioin API方法: <a href="https://ap-plugin.com/Config/docs2">绘图API部署文档</a>
 
-### 鉴黄和鉴赏图片API部署文档
-搭建鉴赏API方法: <a href="https://ap-plugin.com/Config/docs4">鉴赏API部署文档</a>
+### 鉴黄API部署文档
+一个现成的接口
+```
+wd_tagger:  "https://smilingwolf-wd-v1-4-tags.hf.space"
+```
+HuggingFace运行缓慢，建议自己搭
 
 ---
 
