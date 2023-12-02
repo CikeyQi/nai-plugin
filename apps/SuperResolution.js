@@ -46,6 +46,7 @@ export class superResolution extends plugin {
     }
     async Resolution(e, image) {
         let config = Config.getConfig()
+        try {
         const response = await axios.post(config.sdapi.url + '/sdapi/v1/extra-single-image', {
             "upscaling_resize": 1.5,
             "upscaler_1": "ScuNET PSNR",
@@ -57,10 +58,9 @@ export class superResolution extends plugin {
                 'Authorization': 'Basic ' + config.sdapi.token,
             }
         })
-        if (response.status === 200) {
-            return response.data
-        } else {
-            handleAxiosError(e, response)
+        return response.data
+        } catch (error) {
+            handleAxiosError(e, error)
             return false
         }
     }

@@ -40,10 +40,15 @@ class taskQueue extends EventEmitter {
         let task = this.dequeue()
         try {
             let config = Config.getConfig()
-            let picInfo = await getPicture(task.param, task.user, task.type)
-            let { nsfw, nsfwMsg } = await nsfwCheck(picInfo.base64)
-            if (nsfw && config.nsfw_check) {
-                await task.e.reply("您的图片已经生成好了，但是由于图片内容" + nsfwMsg + "，已被拦截")
+            let picInfo = await getPicture(task.param, task.user, task.type, task.e)
+            if (config.nsfw_check) {
+                let { nsfw, nsfwMsg } = await nsfwCheck(picInfo.base64)
+                if (nsfw) {
+                    await task.e.reply("您的图片已经生成好了，但是由于图片内容" + nsfwMsg + "，已被拦截")
+                } else {
+                    await task.e.reply('您的图片已经生成好了，正在发送中，稍等一下哦~\n本次图片ID为：' + picInfo.fileName)
+                    await task.e.reply(segment.image("base64://" + picInfo.base64))
+                }
             } else {
                 await task.e.reply('您的图片已经生成好了，正在发送中，稍等一下哦~\n本次图片ID为：' + picInfo.fileName)
                 await task.e.reply(segment.image("base64://" + picInfo.base64))

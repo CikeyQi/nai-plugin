@@ -4,14 +4,16 @@ import download from "./Download.js";
 import _ from "lodash";
 import { HttpsProxyAgent } from 'https-proxy-agent';
 import fs from 'fs'
+import handleAxiosError from '../utils/handleAxiosError.js'
 
 /**
  * 获取图片
  * @param {*} param 发送的参数
  * @param {*} user 用户ID
  * @param {*} type txt2img文生图，img2img图生图
+ * @param {*} e 消息对象
  */
-async function getPicture(param, user, type) {
+async function getPicture(param, user, type, e) {
   console.log("用户ID：" + user + "发起了一次请求")
   let url = "https://api.novelai.net/ai/generate-image"
   let data = defaultParam[type]
@@ -31,7 +33,8 @@ async function getPicture(param, user, type) {
       responseType: 'arraybuffer'
     })
   } catch (error) {
-    console.log(error)
+    handleAxiosError(e, error)
+    throw error
   }
   let fileName = new Date().getTime()
   let filePath = await download(response.data, user, fileName)
