@@ -4,6 +4,7 @@ proxy:
   enable: false
   host: 127.0.0.1
   port: 7890
+base_url: "https://api.novelai.net"
 sdapi:
   url: ""
   token: ""

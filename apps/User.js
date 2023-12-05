@@ -35,7 +35,7 @@ export class userInfo extends plugin {
 
   async userInfo(e) {
     let msg = '';
-    let url = "https://api.novelai.net/user/data";
+    let url = Config.getConfig.base_url + '/user/data';
     let agent = null;
     if (Config.getConfig().proxy.enable) {
       let proxy = 'http://' + Config.getConfig().proxy.host + ':' + Config.getConfig().proxy.port;
@@ -50,9 +50,9 @@ export class userInfo extends plugin {
 
     await e.reply('正在查询中，预计10s，请稍后...');
 
-    const requests = tokenList.map(async (token, index) => {
+    const requests = tokenList.map(async (token) => {
       try {
-        let headers = { 'authorization': 'Bearer ' + token };
+        headers['Authorization'] = 'Bearer ' + token;
         let response = await axios.get(url, {
           headers: headers,
           httpsAgent: agent
