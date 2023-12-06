@@ -19,11 +19,6 @@ _🎉 使用 NovelAI 官方接口 🎉_
   <img src="https://img.shields.io/badge/Yunzai_Bot-v3-red.svg" alt="NoneBot">
   <br>
   </a>
-    <img src="https://img.shields.io/badge/QQ%E7%BE%A4-%E8%92%99%E5%BE%B7%E5%B9%BC%E7%A8%9A%E5%9B%AD-green?style=flat-square" alt="QQ Chat Group">
-  </a>
-    <a href="https://jq.qq.com/?_wv=1027&k=OtkECVdE">
-    <img src="https://img.shields.io/badge/QQ%E7%BE%A4-%E7%92%83%E6%9C%88%E5%B9%BC%E7%A8%9A%E5%9B%AD-yellow?style=flat-square" alt="QQ Chat Group">
-  </a>
     <a href="https://qm.qq.com/q/RnQteOmD84">
     <img src="https://img.shields.io/badge/QQ%E7%BE%A4-%E7%8C%AB%E5%A8%98%E4%B9%90%E5%9B%AD-pink?style=flat-square" alt="QQ Chat Group">
   </a>
