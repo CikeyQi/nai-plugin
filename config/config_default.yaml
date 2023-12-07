@@ -14,3 +14,5 @@ translate:
 wd_tagger:  ""
 nsfw_check: false
 free_mode: true
+huggingface_token: ''
+nsfw_threshold: 0.7

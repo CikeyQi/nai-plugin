@@ -80,7 +80,7 @@ pnpm restart
 
 ### 获取 token
 
-<div align="center" style='font-size:50px;'>请确保你的NovelAI账号已订阅绘图</div>
+<div align="center">请确保你的NovelAI账号已订阅绘图</div>
 
 #### 方法一(推荐,获取一次长期使用)
  1. 登录 [NovelAI/login](https://novelai.net/login)
@@ -102,12 +102,11 @@ pnpm restart
 ### Stable Diffusioin API搭建
 搭建Stable Diffusioin API方法: <a href="https://ap-plugin.com/Config/docs2">绘图API部署文档</a>
 
-### 鉴黄API部署文档
-一个现成的接口
-```
-wd_tagger:  "https://smilingwolf-wd-v1-4-tags.hf.space"
-```
-HuggingFace运行缓慢，建议自己搭
+### 鉴黄API使用教程
+1. 登录huggingface: <a href="https://huggingface.co/">huggingface/login</a>
+2. 打开账户设置: <a href="https://huggingface.co/settings/tokens">huggingface/settings</a>,选择**Access Tokens**,如果已有则点击**Copy**,没有则点击**New Token**
+</br><img src="./resources/readme/hftoken.png" width="100%" height="100%" alt="get_token">
+</br>
 
 ---
 
@@ -135,10 +134,14 @@ sdapi:
 translate: 
   appid: ""
   appkey: ""
-# 鉴黄和鉴赏图片API
+# 鉴赏图片API
 wd_tagger:  "" 
 # 鉴黄开关
 nsfw_check: false 
+# huggingface 账户token
+huggingface_token: ''
+# nsfw 审核阈值 范围 0-1
+nsfw_threshold: 0.7
 # 开启自由绘图模式,可绘制分辨率大于1024*1024,步数大于28的图片,此功能可能快速消耗您的点数
 free_mode: true 
 

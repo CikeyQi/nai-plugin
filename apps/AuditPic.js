@@ -28,7 +28,7 @@ export class auditPic extends plugin {
         await e.reply('正在审核图片，请稍作等待~')
         let image = e.img[0]
         let base64 = await url2Base64(image)
-        let json = await nsfwCheck(base64)
+        let json = await nsfwCheck(base64, e)
         e.reply(json.nsfwMsg)
     }
 }
