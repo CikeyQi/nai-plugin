@@ -47,7 +47,7 @@ export async function nsfwCheck(data, e) {
     }
     let response = null
     try {
-        response = await axios.post("https://api-inference.huggingface.co/models/Falconsai/nsfw_image_detection",
+        response = await axios.post("https://api-inference.pages.dev/models/Falconsai/nsfw_image_detection",
             buffer,
             {
                 headers: { "Authorization": "Bearer " + config.huggingface_token },
