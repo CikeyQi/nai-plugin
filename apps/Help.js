@@ -54,7 +54,7 @@ export class help extends plugin {
                     },
                     {
                         "icon": 7,
-                        "title": "/重新绘制",
+                        "title": "/重画",
                         "desc": "重复自己上一次生成图片操作"
                     },
                     {

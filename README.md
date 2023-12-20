@@ -168,7 +168,7 @@ free_mode: true
 &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;示例: #绘画 girl, cat ears, 1024*512, Euler, seed=114514, 步数28, smea, ntags=low quality
 
 
- - #重新绘制
+ - #重画
 
 &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;使用上一次绘画/以图画图参数重复绘制
 
