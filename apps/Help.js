@@ -7,16 +7,16 @@ export class help extends plugin {
     constructor() {
         super({
             /** 功能名称 */
-            name: 'nai-绘图帮助',
+            name: 'nai-绘画帮助',
             /** 功能描述 */
-            dsc: '绘图帮助',
+            dsc: '绘画帮助',
             event: 'message',
             /** 优先级，数字越小等级越高 */
             priority: 1009,
             rule: [
                 {
                     /** 命令正则匹配 */
-                    reg: '^(/|#)使用帮助$',
+                    reg: '^(/|#)绘画帮助$',
                     /** 执行方法 */
                     fnc: 'help'
                 }
@@ -44,12 +44,12 @@ export class help extends plugin {
                 "list": [
                     {
                         "icon": 1,
-                        "title": "/绘图",
+                        "title": "/绘画",
                         "desc": "根据用户输入的提示词生成图片"
                     },
                     {
                         "icon": 5,
-                        "title": "/以图绘图",
+                        "title": "/以图画图",
                         "desc": "根据用户输入的图片生成图片"
                     },
                     {

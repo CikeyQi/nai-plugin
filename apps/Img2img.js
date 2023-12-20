@@ -10,16 +10,16 @@ export class img2img extends plugin {
   constructor() {
     super({
       /** 功能名称 */
-      name: 'nai-以图绘图',
+      name: 'nai-以图画图',
       /** 功能描述 */
-      dsc: '以图绘图',
+      dsc: '以图画图',
       event: 'message',
       /** 优先级，数字越小等级越高 */
       priority: 1009,
       rule: [
         {
           /** 命令正则匹配 */
-          reg: '^(/|#)以图绘图([\\s\\S]*)$',
+          reg: '^(/|#)以图画图([\\s\\S]*)$',
           /** 执行方法 */
           fnc: 'img2img'
         }
@@ -34,7 +34,7 @@ export class img2img extends plugin {
       img: e.img,
     };
     await redis.set(`nai:again:${e.user_id}`, JSON.stringify(data));
-    let msg = e.msg.replace(/^\/以图绘图/, '').replace(/^#以图绘图/, '')
+    let msg = e.msg.replace(/^\/以图画图/, '').replace(/^#以图画图/, '')
     let param = await handleParam(e, msg)
     // e.img[0] = 'https://'+e.img[0].replace(/https:\/\//g,'')
     let buffer = Buffer.from(await url2Base64(e.img[0]), 'base64')

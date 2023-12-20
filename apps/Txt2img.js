@@ -6,16 +6,16 @@ export class txt2img extends plugin {
   constructor() {
     super({
       /** 功能名称 */
-      name: 'nai-绘图',
+      name: 'nai-绘画',
       /** 功能描述 */
-      dsc: '绘图',
+      dsc: '绘画',
       event: 'message',
       /** 优先级，数字越小等级越高 */
       priority: 1009,
       rule: [
         {
           /** 命令正则匹配 */
-          reg: '^(/|#)绘图([\\s\\S]*)$',
+          reg: '^(/|#)(绘画|画图)([\\s\\S]*)$',
           /** 执行方法 */
           fnc: 'txt2img'
         }
@@ -24,7 +24,7 @@ export class txt2img extends plugin {
   }
 
   async txt2img(e) {
-    let msg = e.msg.replace(/^\/绘图/, '').replace(/^#绘图/, '')
+    let msg = e.msg.replace(/^\/绘画|^\/画图|^#绘画|^#画图/, '')
     const data = {
       msg: e.msg,
       img: null,

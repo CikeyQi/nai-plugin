@@ -151,7 +151,7 @@ free_mode: true
 
 ## 功能详解
 
- - #绘图/以图绘图 可选参数
+ - #绘画/以图画图 可选参数
 <div align="center">
 
 |参数类型|可选参数|
@@ -165,12 +165,12 @@ free_mode: true
 |SMEA|smea|
 
 </div>
-&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;示例: #绘图 girl, cat ears, 1024*512, Euler, seed=114514, 步数28, smea, ntags=low quality
+&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;示例: #绘画 girl, cat ears, 1024*512, Euler, seed=114514, 步数28, smea, ntags=low quality
 
 
  - #重新绘制
 
-&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;使用上一次绘图/以图绘图参数重复绘制
+&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;使用上一次绘画/以图画图参数重复绘制
 
  - #绑定画风
 
@@ -188,9 +188,9 @@ free_mode: true
 
 &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;查看配置账户状态,包括订阅等级,剩余点数
 
- - #绘图帮助
+ - #绘画帮助
 
-&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;查看可使用的绘图指令
+&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;查看可使用的绘画指令
 
  - #nai更新
 
