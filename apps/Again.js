@@ -15,7 +15,7 @@ export class again extends plugin {
             rule: [
                 {
                     /** 命令正则匹配 */
-                    reg: '^(/|#)重新绘制$',
+                    reg: '^(/|#)重画$',
                     /** 执行方法 */
                     fnc: 'again'
                 }
