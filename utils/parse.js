@@ -86,9 +86,9 @@ function SMEAParam(text) {
 async function promptParam(text) {
     let parameters = {}
     let input = ''
-    let ntags = text.match(/ntags(\s)?=(.*)$/)?.[2]
+    let ntags = text.match(/ntags(\s)?=(.*)$/s)?.[2]
     if (ntags) {
-        input = text.replace(/ntags(\s)?=(.*)$/, '')
+        input = text.replace(/ntags(\s)?=(.*)$/s, '')
     } else {
         input = text
     }
