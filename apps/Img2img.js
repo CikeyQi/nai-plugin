@@ -1,6 +1,4 @@
 import plugin from '../../../lib/plugins/plugin.js'
-import Config from '../components/Config.js'
-import Log from '../utils/logs.js'
 import { handleParam } from '../utils/parse.js'
 import { url2Base64 } from '../utils/utils.js'
 import queue from '../components/Queue.js'
