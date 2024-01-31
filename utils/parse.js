@@ -40,9 +40,9 @@ function samplerParam(text) {
     const samplers = {
         'Euler': 'k_euler',
         'Euler a': 'k_euler_a',
-        'DPM++ 2S a': 'k_dpmpp_2s_a',
-        'DPM++ 2M': 'k_dpmpp_2m',
-        'DPM++ SDE': 'k_dpmpp_sde',
+        'DPM\\+\\+ 2S a': 'k_dpmpp_2s_a',
+        'DPM\\+\\+ 2M': 'k_dpmpp_2m',
+        'DPM\\+\\+ SDE': 'k_dpmpp_sde',
         'DDIM': 'ddim',
     }
     let parameters = null
