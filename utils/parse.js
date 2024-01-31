@@ -4,52 +4,52 @@ import Config from '../components/Config.js'
 function scaleParam(text) {
     let config = Config.getConfig()
     const scale = {
-      "竖图": { height: 1216, width: 832 },
-      "长图": { height: 1216, width: 832 },
-      "宽图": { height: 832, width: 1216 },
-      "横图": { height: 832, width: 1216 },
-      "方图": { height: 1024, width: 1024 }
+        "竖图": { height: 1216, width: 832 },
+        "长图": { height: 1216, width: 832 },
+        "宽图": { height: 832, width: 1216 },
+        "横图": { height: 832, width: 1216 },
+        "方图": { height: 1024, width: 1024 }
     };
-  
+
     let parameters = null;
-  
+
     Object.entries(scale).forEach(([size, dimensions]) => {
-      if (text.includes(size)) {
-        parameters = { ...dimensions };
-        text = text.replace(new RegExp(size, 'g'), '');
-      }
+        if (text.includes(size)) {
+            parameters = { ...dimensions };
+            text = text.replace(new RegExp(size, 'g'), '');
+        }
     });
-  
+
     const result = /(\d{2,7})[\*×](\d{2,7})/.exec(text);
     if (result) {
-      let [width, height] = [Math.floor(Number(result[1]) / 64) * 64, Math.floor(Number(result[2]) / 64) * 64];
-      const maxArea = config.free_mode ? 1048576 : 3145728;
-  
-      while (width * height > maxArea && (width > 64 || height > 64)) {
-        width -= width > 64 ? 64 : 0;
-        height -= height > 64 ? 64 : 0;
-      }
-  
-      parameters = { height, width };
-      text = text.replace(/(\d{2,4})[\*×](\d{2,4})/g, '');
+        let [width, height] = [Math.floor(Number(result[1]) / 64) * 64, Math.floor(Number(result[2]) / 64) * 64];
+        const maxArea = config.free_mode ? 1048576 : 3145728;
+
+        while (width * height > maxArea && (width > 64 || height > 64)) {
+            width -= width > 64 ? 64 : 0;
+            height -= height > 64 ? 64 : 0;
+        }
+
+        parameters = { height, width };
+        text = text.replace(/(\d{2,4})[\*×](\d{2,4})/g, '');
     }
-  
+
     return { parameters, text };
-  }
+}
 function samplerParam(text) {
     const samplers = {
         'Euler': 'k_euler',
         'Euler a': 'k_euler_a',
-        'DPM\\+\\+ 2S a': 'k_dpmpp_2s_a',
-        'DPM\\+\\+ 2M': 'k_dpmpp_2m',
-        'DPM\\+\\+ SDE': 'k_dpmpp_sde',
+        'DPM++ 2S a': 'k_dpmpp_2s_a',
+        'DPM++ 2M': 'k_dpmpp_2m',
+        'DPM++ SDE': 'k_dpmpp_sde',
         'DDIM': 'ddim',
     }
     let parameters = null
     Object.entries(samplers).forEach(([alias, sampler]) => {
         if (text.includes(alias)) {
             parameters = { sampler: sampler }
-            text = text.replace(new RegExp(alias, 'g'), '')
+            text = text.replace(new RegExp(alias.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'), '')
         }
     })
     return { parameters, text }
