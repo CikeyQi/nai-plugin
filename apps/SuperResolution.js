@@ -38,7 +38,7 @@ export class superResolution extends plugin {
         let dimensions = sizeOf(Buffer.from(image, 'base64'))
         // 获取超分图片的尺寸
         let dimensions2 = sizeOf(Buffer.from(data.image, 'base64'))
-        await e.reply(segment.image('base64://' + data.image))
+        await e.reply({...segment.image('base64://' + data.image), origin: true})
         await e.reply(`\n=====图片超分成功=====
     原图尺寸：${dimensions.width}x${dimensions.height}
     超分尺寸：${dimensions2.width}x${dimensions2.height}`)

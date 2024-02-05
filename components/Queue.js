@@ -47,11 +47,11 @@ class taskQueue extends EventEmitter {
                     await task.e.reply("您的图片已经生成好了，但是由于图片内容" + nsfwMsg + "，已被拦截")
                 } else {
                     await task.e.reply('您的图片已经生成好了，正在发送中，稍等一下哦~\n本次图片ID为：' + picInfo.fileName)
-                    await task.e.reply(segment.image("base64://" + picInfo.base64))
+                    await task.e.reply({...segment.image("base64://" + picInfo.base64), origin: true})
                 }
             } else {
                 await task.e.reply('您的图片已经生成好了，正在发送中，稍等一下哦~\n本次图片ID为：' + picInfo.fileName)
-                await task.e.reply(segment.image("base64://" + picInfo.base64))
+                await task.e.reply({...segment.image("base64://" + picInfo.base64), origin: true})
             }
         } catch (error) {
             Log.e(error)
@@ -79,7 +79,7 @@ queue.on('taskEnqueue', async () => {
     try {
         let picInfo = await getPicture(task.param, task.user, task.type)
         await task.e.reply('您的图片已经生成好了，正在发送中，稍等一下哦~\n本次图片ID为：' + picInfo.fileName)
-        await task.e.reply(segment.image("base64://" + picInfo.base64))
+        await task.e.reply({...segment.image("base64://" + picInfo.base64), origin: true})
     } catch (error) {
         Log.e(error)
         task.e.reply('出错啦,请联系开发者')
