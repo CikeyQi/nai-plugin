@@ -102,10 +102,6 @@ pnpm restart
 ### Stable Diffusioin API搭建
 搭建Stable Diffusioin API方法: <a href="https://ap-plugin.com/Config/docs2">绘图API部署文档</a>
 
-### 鉴黄API使用教程
-1. 登录huggingface: <a href="https://huggingface.co/">huggingface/login</a>
-2. 打开账户设置: <a href="https://huggingface.co/settings/tokens">huggingface/settings</a>,选择**Access Tokens**,如果已有则点击**Copy**,没有则点击**New Token**
-</br><img src="./resources/readme/hftoken.png" width="100%" height="100%" alt="get_token">
 </br>
 
 ---
