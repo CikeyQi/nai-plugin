@@ -120,31 +120,28 @@ novelai_token:
   - please_paste_your_token_1_here
   - please_paste_your_token_2_here
 # 当前绘图使用token序号,0开始
-use_token: 0 
-# 链接NovelAI使用代理配置
-proxy: 
+use_token: 0
+# 链接NovelAI使用代理配置（国内机器与下方base_url选一个使用）
+proxy:
   enable: false
   host: 127.0.0.1
   port: 7890
+# 反向代理地址（本人搭建反向代理：`https://nai3.pages.dev`）
+base_url: "https://api.novelai.net"
 # Stable Diffusion绘图API,如果鉴赏图片为Stable Diffusion生成,则可解析图片绘图参数
-sdapi: 
+sdapi:
   url: ""
   token: ""
 # 百度翻译配置
-translate: 
+translate:
   appid: ""
   appkey: ""
-# 鉴赏图片API
-wd_tagger:  "" 
 # 鉴黄开关
-nsfw_check: false 
-# huggingface 账户token
-huggingface_token: ''
+nsfw_check: false
 # nsfw 审核阈值 范围 0-1
-nsfw_threshold: 0.7
+nsfw_threshold: 0.8
 # 开启自由绘图模式,可绘制分辨率大于1024*1024,步数大于28的图片,此功能可能快速消耗您的点数
-free_mode: true 
-
+free_mode: true
 ```
 
 </br></br>
