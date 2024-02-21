@@ -11,7 +11,6 @@ sdapi:
 translate:
   appid: ""
   appkey: ""
-wd_tagger:  ""
 nsfw_check: false
 nsfw_threshold: 0.8
 free_mode: true
