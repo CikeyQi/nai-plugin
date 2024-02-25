@@ -85,7 +85,6 @@ const defaultParam = {
       "n_samples": 1, // 批次
       "ucPreset": 0, // 负面提示词引导系数
       "qualityToggle": true, // 是否开启质量优化
-      "reference_image": "", // 参考图片
       "reference_information_extracted": 1, // 参考图片信息提取
       "reference_strength": 0.6, // 参考图片强度
       "sm": false, // SMEA开关
@@ -118,7 +117,6 @@ const defaultParam = {
       "noise": 0,
       "ucPreset": 0, // 负面提示词引导系数
       "qualityToggle": true, // 是否开启质量优化
-      "reference_image": "", // 参考图片
       "reference_information_extracted": 1, // 参考图片信息提取
       "reference_strength": 0.6, // 参考图片强度
       "sm": false, // SMEA开关
