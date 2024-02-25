@@ -34,7 +34,6 @@ export class img2img extends plugin {
     await redis.set(`nai:again:${e.user_id}`, JSON.stringify(data));
     let msg = e.msg.replace(/^\/以图画图/, '').replace(/^#以图画图/, '')
     let param = await handleParam(e, msg)
-    // e.img[0] = 'https://'+e.img[0].replace(/https:\/\//g,'')
     let buffer = Buffer.from(await url2Base64(e.img[0]), 'base64')
     let dimensions = sizeOf(buffer)
     let width = dimensions.width
@@ -48,10 +47,14 @@ export class img2img extends plugin {
       dimensions.height = Math.floor(height / 64) * 64;
     }
     param.parameters.image = await url2Base64(e.img[0])
+    // 判断是否有参考图片
+    if (e.img[1]) {
+      param.parameters.reference_image = await url2Base64(e.img[1])
+    }
     param.parameters.width = dimensions.width
     param.parameters.height = dimensions.height
     param.parameters.extra_noise_seed = param.parameters.seed
-    e.reply(`当前队列还有${queue.lock ? queue.size() + 1 : queue.size()}人，大概还需要${14 * ((queue.lock ? queue.size() + 1 : queue.size()) + 1)}秒完成`)
+    e.reply(`${param.parameters.reference_image ? '[已上传参考图片] ' : ''}当前队列还有${queue.lock ? queue.size() + 1 : queue.size()}人，大概还需要${14 * ((queue.lock ? queue.size() + 1 : queue.size()) + 1)}秒完成`)
     queue.enqueue({
       e: e,
       param: param,
