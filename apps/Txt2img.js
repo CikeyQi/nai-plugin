@@ -35,7 +35,7 @@ export class txt2img extends plugin {
     await redis.set(`nai:again:${e.user_id}`, JSON.stringify(data));
     let param = await handleParam(e, msg)
     if (e.img[0]) {
-      param.parameters.reference_image = await url2Base64(e.img[1])
+      param.parameters.reference_image = await url2Base64(e.img[0])
     }
     e.reply(`${param.parameters.reference_image ? '[已上传参考图片] ' : ''}当前队列还有${queue.lock ? queue.size() + 1 : queue.size()}人，大概还需要${14 * ((queue.lock ? queue.size() + 1 : queue.size()) + 1)}秒完成`)
     queue.enqueue({

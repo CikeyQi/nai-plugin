@@ -47,7 +47,6 @@ export class img2img extends plugin {
       dimensions.height = Math.floor(height / 64) * 64;
     }
     param.parameters.image = await url2Base64(e.img[0])
-    // 判断是否有参考图片
     if (e.img[1]) {
       param.parameters.reference_image = await url2Base64(e.img[1])
     }
