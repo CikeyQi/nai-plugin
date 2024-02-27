@@ -38,7 +38,7 @@ function scaleParam(text) {
 }
 function samplerParam(text) {
     const samplers = {
-        'Euler a': 'k_euler_a',
+        'Euler a': 'k_euler_ancestral',
         'Euler': 'k_euler',
         'DPM++ 2S a': 'k_dpmpp_2s_a',
         'DPM++ 2M': 'k_dpmpp_2m',
