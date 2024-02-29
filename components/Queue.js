@@ -58,11 +58,11 @@ class taskQueue extends EventEmitter {
                     await task.e.reply("您的图片已经生成好了，但是由于图片内容" + nsfwMsg + "，已被拦截")
                 } else {
                     await task.e.reply('您的图片已经生成好了，正在发送中，稍等一下哦~\n本次图片ID为：' + picInfo.fileName)
-                    await task.e.reply({...segment.image("base64://" + picInfo.base64), origin: true})
+                    await task.e.reply({ ...segment.image("base64://" + picInfo.base64), origin: true })
                 }
             } else {
                 await task.e.reply('您的图片已经生成好了，正在发送中，稍等一下哦~\n本次图片ID为：' + picInfo.fileName)
-                await task.e.reply({...segment.image("base64://" + picInfo.base64), origin: true})
+                await task.e.reply({ ...segment.image("base64://" + picInfo.base64), origin: true })
             }
         } catch (error) {
             Log.e(error)
@@ -78,14 +78,11 @@ class taskQueue extends EventEmitter {
 
 class queueList {
     constructor() {
-        // 一个元素负责维护一个token队列
         this.list = []
         this.init()
-        // 记录最近一次进入的队列序号
         this.lastTaskQueue = 0
     }
     async init() {
-        // 可用于刷新token
         this.list = []
         const config = Config.getConfig()
         const url = config.base_url + '/user/data'
@@ -116,8 +113,15 @@ class queueList {
             }
         })
     }
-    // 任务分发
+
     async enqueue(task) {
+        const use_token = Config.getConfig().use_token
+        if (use_token != 0) {
+            let queue = this.list.filter(queue => queue.token == Config.getConfig().novelai_token[use_token - 1])[0]
+            const restNumbeer = queue.lock ? queue.size + 1 : queue.size
+            queue.enqueue(task)
+            return restNumbeer
+        }
         if (this.list.length === 1) {
             const restNumbeer = list[0].lock ? list[0].size + 1 : list[0].size
             list[0].enqueue(task)
@@ -127,10 +131,8 @@ class queueList {
             while (true) {
                 let nextTaskQueue = (this.lastTaskQueue + 1) % this.list.length
                 if (!this.list[nextTaskQueue].lock) {
-                    // 保存此次的队列索引
                     this.lastTaskQueue = nextTaskQueue
                     const restNumbeer = this.list[nextTaskQueue].size
-                    // 分发任务
                     this.list[nextTaskQueue].enqueue(task)
                     return restNumbeer
                 }
