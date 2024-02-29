@@ -13,7 +13,7 @@ import handleAxiosError from '../utils/handleAxiosError.js'
  * @param {*} type txt2img文生图，img2img图生图
  * @param {*} e 消息对象
  */
-async function getPicture(param, user, type, e) {
+async function getPicture(param, user, type, e, token) {
   console.log("用户ID：" + user + "发起了一次请求")
   let url = Config.getConfig().base_url + '/ai/generate-image';
   let data = defaultParam[type]
@@ -26,7 +26,7 @@ async function getPicture(param, user, type, e) {
   }
   let response = null
   try {
-    headers['Authorization'] = await getToken()
+    headers['Authorization'] = 'Bearer ' + token
     response = await axios.post(url, mergeData, {
       headers: headers,
       httpsAgent: agent,
@@ -46,11 +46,11 @@ async function getPicture(param, user, type, e) {
   }
 }
 
-/**
+/* *
  * 获取随机Token
  * @returns
  */
-async function getToken() {
+/* async function getToken() {
   let config = Config.getConfig()
   let tokenList = config.novelai_token
   let use_token = config.use_token
@@ -61,7 +61,7 @@ async function getToken() {
     token = tokenList[use_token - 1]
   }
   return 'Bearer ' + token
-}
+} */
 
 const headers = {
   "authority": "api.novelai.net",

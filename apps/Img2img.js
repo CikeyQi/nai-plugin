@@ -53,13 +53,13 @@ export class img2img extends plugin {
     param.parameters.width = dimensions.width
     param.parameters.height = dimensions.height
     param.parameters.extra_noise_seed = param.parameters.seed
-    e.reply(`${param.parameters.reference_image ? '[已上传参考图片] ' : ''}当前队列还有${queue.lock ? queue.size() + 1 : queue.size()}人，大概还需要${14 * ((queue.lock ? queue.size() + 1 : queue.size()) + 1)}秒完成`)
-    queue.enqueue({
+    let restNumbeer = queue.enqueue({
       e: e,
       param: param,
       user: e.user_id,
       type: 'img2img'
     })
+    e.reply(`${param.parameters.reference_image ? '[已上传参考图片] ' : ''}当前队列还有${restNumbeer}人，大概还需要${14 * (restNumbeer + 1)}秒完成`)
     return true
   }
 }

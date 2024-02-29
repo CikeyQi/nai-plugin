@@ -38,13 +38,13 @@ export class txt2img extends plugin {
     if (e.img) {
       param.parameters.reference_image = await url2Base64(e.img[0])
     }
-    e.reply(`${param.parameters.reference_image ? '[已上传参考图片] ' : ''}当前队列还有${queue.lock ? queue.size() + 1 : queue.size()}人，大概还需要${14 * ((queue.lock ? queue.size() + 1 : queue.size()) + 1)}秒完成`)
-    queue.enqueue({
+    let restNumber = queue.enqueue({
       e: e,
       param: param,
       user: e.user_id,
       type: 'txt2img'
     })
+    e.reply(`${param.parameters.reference_image ? '[已上传参考图片] ' : ''}当前队列还有${restNumber}人，大概还需要${14 * (restNumber + 1)}秒完成`)
     return true
   }
 }
