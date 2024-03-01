@@ -109,7 +109,7 @@ class QueueList {
                 let response = await axios.get(url, { headers, httpsAgent: agent });
                 return { response: response.data, token };
             } catch (err) {
-                Log.error('[nai-plugin] Token初始化' + err);
+                Log.e('第' + (tokenList.indexOf(token) + 1) + '个Token初始化失败，原因：' + err.message);
             }
         }));
 
