@@ -123,7 +123,7 @@ class QueueList {
         const use_token = Config.getConfig().use_token;
         let queue;
 
-        if (use_token) {
+        if (use_token !== 0) {
             queue = this.list.find(q => q.token === Config.getConfig().novelai_token[use_token - 1]);
             if (queue) return this.addTaskToQueue(queue, task);
         }
@@ -138,8 +138,16 @@ class QueueList {
     }
 
     // 查找没有锁定的队列
-    findAvailableQueue() {
-        return this.list.find(queue => !queue.lock);
+    findAvailableQueue(task) {
+        const startQueue = this.lastTaskQueue;
+        do {
+            this.lastTaskQueue = (this.lastTaskQueue + 1) % this.list.length;
+            if (!this.list[this.lastTaskQueue].lock) {
+                return this.list[this.lastTaskQueue];
+            }
+        } while (this.lastTaskQueue !== startQueue);
+    
+        return null;
     }
 
     // 按队列大小顺序排序，并返回第一个队列
