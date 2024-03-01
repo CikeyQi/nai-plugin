@@ -138,7 +138,7 @@ class QueueList {
     }
 
     // 查找没有锁定的队列
-    findAvailableQueue(task) {
+    findAvailableQueue() {
         const startQueue = this.lastTaskQueue;
         do {
             this.lastTaskQueue = (this.lastTaskQueue + 1) % this.list.length;
