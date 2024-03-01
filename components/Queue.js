@@ -123,8 +123,8 @@ class queueList {
             return restNumbeer
         }
         if (this.list.length === 1) {
-            const restNumbeer = list[0].lock ? list[0].size + 1 : list[0].size
-            list[0].enqueue(task)
+            const restNumbeer = this.list[0].lock ? this.list[0].size + 1 : this.list[0].size
+            this.list[0].enqueue(task)
             return restNumbeer
         }
         if (this.list.filter(queue => !queue.lock).length >= 1) {

@@ -38,7 +38,7 @@ export class txt2img extends plugin {
     if (e.img) {
       param.parameters.reference_image = await url2Base64(e.img[0])
     }
-    let restNumber = queue.enqueue({
+    let restNumber = await queue.enqueue({
       e: e,
       param: param,
       user: e.user_id,

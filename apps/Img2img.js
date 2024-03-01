@@ -53,7 +53,7 @@ export class img2img extends plugin {
     param.parameters.width = dimensions.width
     param.parameters.height = dimensions.height
     param.parameters.extra_noise_seed = param.parameters.seed
-    let restNumbeer = queue.enqueue({
+    let restNumbeer = await queue.enqueue({
       e: e,
       param: param,
       user: e.user_id,
