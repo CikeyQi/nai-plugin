@@ -31,6 +31,10 @@ export class find extends plugin {
         }
         let files = fs.readdirSync(pluginResources + '/userPic/' + user)
         let num = e.msg.match(/\d+/g)
+        if (num == null) {
+            e.reply('图片ID不能为空')
+            return true
+        }
         if (files.indexOf(num + '.png') == -1) {
             e.reply('没有找到ID为[' + num + ']的图片')
             return true
