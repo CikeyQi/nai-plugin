@@ -15,7 +15,7 @@ export class find extends plugin {
             rule: [
                 {
                     /** 命令正则匹配 */
-                    reg: '^(/|#)查找图片 *(\\d+)$',
+                    reg: '^(/|#)查找图片.*$',
                     /** 执行方法 */
                     fnc: 'find'
                 }
