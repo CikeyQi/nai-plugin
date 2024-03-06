@@ -29,12 +29,12 @@ export class again extends plugin {
             e.reply("太久远了，我也忘记上一次绘的图是什么了");
             return false;
         }
-        const { msg, img } = JSON.parse(usageData);
+        const { msg, img, istxt2img } = JSON.parse(usageData);
         if (msg) e.msg = msg;
         if (img) e.img = img;
         const againTxt2img = new txt2img();
         const againImg2img = new img2img();
-        if (e.img) {
+        if (!istxt2img) {
             againImg2img.__proto__.img2img.call(againImg2img, e);
         } else {
             againTxt2img.__proto__.txt2img.call(againTxt2img, e);

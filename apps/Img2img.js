@@ -31,6 +31,7 @@ export class img2img extends plugin {
     const data = {
       msg: e.msg,
       img: e.img,
+      istxt2img: false,
     };
     await redis.set(`nai:again:${e.user_id}`, JSON.stringify(data));
     let msg = e.msg.replace(/^\/以图画图/, '').replace(/^#以图画图/, '')
