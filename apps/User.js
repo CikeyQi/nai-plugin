@@ -31,7 +31,7 @@ export class userInfo extends plugin {
           fnc: 'userInfo'
         },
         {
-          reg: '^(/|#)(nai)?刷新token$',
+          reg: '^(/|#)(nai)?刷新(T|t)oken$',
           fnc: 'refreshToken'
         }
       ]
@@ -96,8 +96,9 @@ export class userInfo extends plugin {
   }
 
   async refreshToken(e) {
-    e.reply('正在查询token有效性，预计10s，请稍后...')
-    await queue.init();
-    e.reply(`已刷新token状态，当前共有${queue.list.length}个token可用`)
+    e.reply('正在从配置文件中读取Token检查可用性，请稍后...');
+    await queue.init(e);
+    e.reply(`已刷新Token状态，当前共有${queue.list.length}个Token可用`)
+    return true
   }
 }  

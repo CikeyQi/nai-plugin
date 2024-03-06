@@ -109,6 +109,9 @@ class QueueList {
                 let response = await axios.get(url, { headers, httpsAgent: agent });
                 return { response: response.data, token };
             } catch (err) {
+                if (arguments.length > 0) {
+                    arguments[0].reply('第' + (tokenList.indexOf(token) + 1) + '个Token初始化失败，原因：' + err.message);
+                }
                 Log.e('第' + (tokenList.indexOf(token) + 1) + '个Token初始化失败，原因：' + err.message);
             }
         }));

@@ -25,7 +25,7 @@ export class txt2img extends plugin {
   }
 
   async txt2img(e) {
-    if (queue.list.length === 0) return e.reply('未配置有效token，如新增token可尝试#nai刷新token')
+    if (queue.list.length === 0) return e.reply('当前队列中的可用Token为空，请先添加Token/使用【#刷新Token】指令刷新已经配置的Token')
     let msg = e.msg.replace(/^\/绘画|^\/画图|^#绘画|^#画图/, '')
     if (msg === '帮助') {
       return false
