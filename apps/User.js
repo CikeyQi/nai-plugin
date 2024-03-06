@@ -5,6 +5,14 @@ import { HttpsProxyAgent } from 'https-proxy-agent';
 import axios from 'axios'
 import handleAxiosError from '../utils/handleAxiosError.js'
 
+const headers = {
+  "authority": "api.novelai.net",
+  "Origin": "https://novelai.net",
+  "Referer": "https://novelai.net",
+  "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 Edg/120.0.0.0",
+  "Content-Type": "application/json",
+}
+
 export class userInfo extends plugin {
   constructor() {
     super({
