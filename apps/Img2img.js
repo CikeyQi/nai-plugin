@@ -26,6 +26,7 @@ export class img2img extends plugin {
   }
 
   async img2img(e) {
+    if (queue.list.length === 0) return e.reply('未配置有效token，如新增token可尝试#nai刷新token')
     if (!e.img) return e.reply('请将图片连同指令一起发送')
     const data = {
       msg: e.msg,

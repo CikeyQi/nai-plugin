@@ -1,16 +1,9 @@
 import plugin from '../../../lib/plugins/plugin.js'
+import queue from '../components/Queue.js';
 import Config from '../components/Config.js'
 import { HttpsProxyAgent } from 'https-proxy-agent';
 import axios from 'axios'
 import handleAxiosError from '../utils/handleAxiosError.js'
-
-const headers = {
-  "authority": "api.novelai.net",
-  "Origin": "https://novelai.net",
-  "Referer": "https://novelai.net",
-  "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 Edg/120.0.0.0",
-  "Content-Type": "application/json",
-}
 
 export class userInfo extends plugin {
   constructor() {
@@ -28,6 +21,10 @@ export class userInfo extends plugin {
           reg: '^(/|#)账户状态$',
           /** 执行方法 */
           fnc: 'userInfo'
+        },
+        {
+          reg: '^(/|#)(nai)?刷新token$',
+          fnc: 'refreshToken'
         }
       ]
     })
@@ -88,5 +85,11 @@ export class userInfo extends plugin {
 
     e.reply(msg);
     return true;
+  }
+
+  async refreshToken(e) {
+    e.reply('正在查询token有效性，预计10s，请稍后...')
+    await queue.init();
+    e.reply(`已刷新token状态，当前共有${queue.list.length}个token可用`)
   }
 }  
