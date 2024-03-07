@@ -15,7 +15,7 @@ export class again extends plugin {
             rule: [
                 {
                     /** 命令正则匹配 */
-                    reg: '^(/|#)重画$',
+                    reg: '^(/|#)重画.*$',
                     /** 执行方法 */
                     fnc: 'again'
                 }
@@ -24,21 +24,25 @@ export class again extends plugin {
     }
 
     async again(e) {
-        const usageData = await redis.get(`nai:again:${e.user_id}`);
+        let user_id = e.msg.replace(/^\/重画|^#重画/, '').trim() || e.user_id;
+    
+        const usageData = await redis.get(`nai:again:${user_id}`);
         if (!usageData) {
             e.reply("太久远了，我也忘记上一次绘的图是什么了");
             return false;
         }
-        const { msg, img, istxt2img } = JSON.parse(usageData);
+    
+        const { msg, img, type } = JSON.parse(usageData);
         if (msg) e.msg = msg;
         if (img) e.img = img;
-        const againTxt2img = new txt2img();
-        const againImg2img = new img2img();
-        if (!istxt2img) {
-            againImg2img.__proto__.img2img.call(againImg2img, e);
+    
+        if (type === 'txt2img') {
+            const againTxt2img = new txt2img();
+            await againTxt2img.txt2img(e);
         } else {
-            againTxt2img.__proto__.txt2img.call(againTxt2img, e);
+            const againImg2img = new img2img();
+            await againImg2img.img2img(e);
         }
-        return true
+        return true;
     }
 }

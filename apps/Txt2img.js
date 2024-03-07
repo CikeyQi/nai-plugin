@@ -33,7 +33,7 @@ export class txt2img extends plugin {
     const data = {
       msg: e.msg,
       img: e.img ? e.img : null,
-      istxt2img: true,
+      type: 'txt2img'
     };
     await redis.set(`nai:again:${e.user_id}`, JSON.stringify(data));
     let param = await handleParam(e, msg)
