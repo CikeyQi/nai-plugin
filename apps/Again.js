@@ -15,7 +15,7 @@ export class again extends plugin {
             rule: [
                 {
                     /** 命令正则匹配 */
-                    reg: '^(/|#)重画.*$',
+                    reg: '^(/|#)重画$',
                     /** 执行方法 */
                     fnc: 'again'
                 }
@@ -24,9 +24,7 @@ export class again extends plugin {
     }
 
     async again(e) {
-        let user_id = e.msg.replace(/^\/重画|^#重画/, '').trim() || e.user_id;
-    
-        const usageData = await redis.get(`nai:again:${user_id}`);
+        const usageData = await redis.get(`nai:again:${e.user_id}`);
         if (!usageData) {
             e.reply("太久远了，我也忘记上一次绘的图是什么了");
             return false;

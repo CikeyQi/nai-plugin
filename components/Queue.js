@@ -80,7 +80,7 @@ class TaskQueue extends EventEmitter {
         await e.reply('您的图片已经生成好了，正在发送中，稍等一下哦~\n本次图片ID为：' + picInfo.fileName);
         await e.reply([{ ...segment.image("base64://" + picInfo.base64), origin: true },
         segment.button([
-            { text: '再来一张', callback: '/重画' + e.user_id },
+            { text: '再来一张', callback: e.msg },
         ])
         ]);
     }
