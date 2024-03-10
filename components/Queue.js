@@ -107,22 +107,26 @@ class QueueList {
             agent = new HttpsProxyAgent(proxy);
         }
 
-        let results = await Promise.all(tokenList.map(async (token) => {
+        let results = await Promise.allSettled(tokenList.map(async (token) => {
             try {
                 headers['Authorization'] = 'Bearer ' + token;
                 let response = await axios.get(url, { headers, httpsAgent: agent });
                 return { response: response.data, token };
             } catch (err) {
-                if (arguments.length > 0) {
-                    arguments[0].reply('第' + (tokenList.indexOf(token) + 1) + '个Token初始化失败，原因：' + err.message);
-                }
-                Log.e('第' + (tokenList.indexOf(token) + 1) + '个Token初始化失败，原因：' + err.message);
+                return Promise.reject(err)
             }
         }));
-
-        this.list = results
-            .filter(result => result && result.response.subscription.active)
-            .map(result => new TaskQueue(result.token));
+        results.forEach((result, index) => {
+            if (result.status === 'rejected') {
+                const errorMessage = '第' + (index + 1) + '个Token初始化失败，原因：' + result.reason.message;
+                if (arguments.length > 0 && typeof arguments[0].reply === 'function') {
+                    arguments[0].reply(errorMessage);
+                }
+                Log.e(errorMessage);
+            } else if (result.status === 'fulfilled' && result.value.response.subscription.active === true) {
+                this.list.push(new TaskQueue(result.value.token));
+            }
+        });
     }
 
     // 将任务添加到最适合的队列
