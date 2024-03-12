@@ -183,19 +183,72 @@ export function supportGuoba() {
         },
         {
           field: "nsfw_check",
-          label: "启用审核",
-          bottomHelpMessage: "启用审核拦截违规内容",
-          component: "Switch",
+          label: "审核方式",
+          bottomHelpMessage: "选择图片审核方式",
+          component: "Select",
+          componentProps: {
+            options: [
+              { label: "不审核", value: false },
+              { label: "使用api4ai", value: "api4ai" },
+              { label: "使用腾讯云（需配置）", value: "tencent" },
+            ],
+          },
         },
         {
-          field: "nsfw_threshold",
-          label: "审核阈值",
+          field: "api4ai.nsfw_threshold",
+          label: "api4ai审核阈值",
           bottomHelpMessage: "审核阈值，0-1之间",
           component: "InputNumber",
           componentProps: {
             min: 0,
             max: 1,
             step: 0.01,
+          },
+        },
+        {
+          field: "tencent.SecretId",
+          label: "SecretId",
+          bottomHelpMessage: "腾讯云SecretId",
+          component: "Input",
+          componentProps: {
+            placeholder: '请输入腾讯云SecretId',
+          },
+        },
+        {
+          field: "tencent.SecretKey",
+          label: "SecretKey",
+          bottomHelpMessage: "腾讯云SecretKey",
+          component: "InputPassword",
+          componentProps: {
+            placeholder: '请输入腾讯云SecretKey',
+            visible: false,
+          },
+        },
+        {
+          field: "tencent.Bucket",
+          label: "Bucket",
+          bottomHelpMessage: "腾讯云存储桶（如：example-1250000000）",
+          component: "Input",
+          componentProps: {
+            placeholder: '请输入腾讯云Bucket',
+          },
+        },
+        {
+          field: "tencent.Region",
+          label: "Region",
+          bottomHelpMessage: "腾讯云存储桶所在地域（如：ap-guangzhou）",
+          component: "Input",
+          componentProps: {
+            placeholder: '请输入腾讯云Region',
+          },
+        },
+        {
+          field: "tencent.BizType",
+          label: "BizType",
+          bottomHelpMessage: "腾讯云审核策略（空为默认）",
+          component: "Input",
+          componentProps: {
+            placeholder: '请输入腾讯云BizType',
           },
         },
       ],

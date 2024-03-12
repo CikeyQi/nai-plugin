@@ -11,6 +11,13 @@ sdapi:
 translate:
   appid: ""
   appkey: ""
-nsfw_check: false
-nsfw_threshold: 0.8
+nsfw_check: "api4ai"
+api4ai:
+  nsfw_threshold: 0.8
+tencent:
+  SecretId: ""
+  SecretKey: ""
+  Bucket: ""
+  Region: ""
+  BizType: ""
 free_mode: true

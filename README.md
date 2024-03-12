@@ -115,7 +115,7 @@ pnpm restart
 novelai_token: 
   - please_paste_your_token_1_here
   - please_paste_your_token_2_here
-# 当前绘图使用token序号,0开始
+# 当前绘图使用token序号,0为轮询
 use_token: 0
 # 链接NovelAI使用代理配置（国内机器与下方base_url选一个使用）
 proxy:
@@ -132,11 +132,19 @@ sdapi:
 translate:
   appid: ""
   appkey: ""
-# 鉴黄开关
+# 鉴黄设置，可选false/api4ai/tencent
 nsfw_check: false
-# nsfw 审核阈值 范围 0-1
-nsfw_threshold: 0.8
-# 开启自由绘图模式,可绘制分辨率大于1024*1024,步数大于28的图片,此功能可能快速消耗您的点数
+# api4ai 审核阈值 范围 0-1
+api4ai:
+  nsfw_threshold: 0.8
+# tencent 审核相关设置
+tencent:
+  SecretId: ""
+  SecretKey: ""
+  Bucket: ""
+  Region: ""
+  BizType: ""
+# 开启免费绘图模式,可绘制分辨率大于1024*1024,步数大于28的图片,关闭后可能快速消耗您的点数
 free_mode: true
 ```
 

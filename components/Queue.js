@@ -56,7 +56,7 @@ class TaskQueue extends EventEmitter {
         try {
             let config = Config.getConfig();
             let picInfo = await getPicture(task.param, task.user, task.type, task.e, this.token);
-            if (config.nsfw_check) {
+            if (config.nsfw_check !== false) {
                 let { nsfw, nsfwMsg } = await nsfwCheck(picInfo.base64, task.e);
                 if (nsfw) {
                     await task.e.reply("您的图片已经生成好了，但是由于图片内容" + nsfwMsg + "，已被拦截");
