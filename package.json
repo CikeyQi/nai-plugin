@@ -12,6 +12,7 @@
     "axios": "^1.6.2",
     "adm-zip": "^0.5.10",
     "https-proxy-agent": "^7.0.2",
+    "cos-nodejs-sdk-v5": "^2.13.3",
     "form-data": "^4.0.0"
   },
   "keywords": [
