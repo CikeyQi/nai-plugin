@@ -123,7 +123,7 @@ class QueueList {
                     arguments[0].reply(errorMessage);
                 }
                 Log.e(errorMessage);
-            } else if (result.status === 'fulfilled' && (result.value.response.subscription.active === true || result.value.response.subscription.purchasedTrainingSteps > 0)) {
+            } else if (result.status === 'fulfilled' && (result.value.response.subscription.active === true || result.value.response.subscription.trainingStepsLeft.purchasedTrainingSteps > 0)) {
                 this.list.push(new TaskQueue(result.value.token));
             }
         });
