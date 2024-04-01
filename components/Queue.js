@@ -49,9 +49,9 @@ class TaskQueue extends EventEmitter {
     // 处理队列中的下一任务
     async processNextTask() {
         if (this.lock || this.isEmpty()) return;
-        
+
         this.lock = true; // 锁定队列
-        
+
         let task = this.dequeue(); // 取出任务
         try {
             let config = Config.getConfig();
@@ -96,35 +96,51 @@ class QueueList {
     // 初始化QueueList
     async init() {
         this.list = [];
-        
-        const config = Config.getConfig();
-        const url = config.base_url + '/user/data';
-        const tokenList = config.novelai_token;
-        let agent = null;
-        
-        if (config.proxy.enable) {
-            let proxy = 'http://' + config.proxy.host + ':' + config.proxy.port;
-            agent = new HttpsProxyAgent(proxy);
-        }
 
-        let results = await Promise.allSettled(tokenList.map(async (token) => {
+        const config = await Config.getConfig();
+        const url = `${config.base_url}/user/data`;
+        const { novelai_token: tokenList, proxy } = config;
+        const headers = {};
+
+        let agent = proxy.enable
+            ? new HttpsProxyAgent(`http://${proxy.host}:${proxy.port}`)
+            : null;
+
+        let results = await Promise.all(tokenList.map(async (token) => {
+            headers['Authorization'] = `Bearer ${token}`;
+
             try {
-                headers['Authorization'] = 'Bearer ' + token;
                 let response = await axios.get(url, { headers, httpsAgent: agent });
-                return { response: response.data, token };
-            } catch (err) {
-                return Promise.reject(err)
+                let { subscription } = response.data;
+
+                if (subscription.active || subscription.trainingStepsLeft.purchasedTrainingSteps > 0) {
+                    this.list.push(new TaskQueue(token));
+                }
+                return { status: 'fulfilled', data: response.data, token };
+            } catch (error) {
+
+                let errorMessage = "发生未知错误";
+                if (error.response) {
+                    errorMessage = `请求遇到问题，服务器返回状态码：${error.response.status}`;
+                } else if (error.request) {
+                    errorMessage = "网络异常或服务器没有响应，请检查您的网络连接后重试";
+                } else if (error.message) {
+                    errorMessage = `请求发送失败：${error.message}`;
+                }
+                if (error.code) {
+                    errorMessage += ` 错误码：${error.code}`;
+                }
+                return { status: 'rejected', reason: errorMessage };
             }
         }));
+
         results.forEach((result, index) => {
             if (result.status === 'rejected') {
-                const errorMessage = '第' + (index + 1) + '个Token初始化失败，原因：' + result.reason.message;
+                const message = `第${index + 1}个Token初始化失败，原因：${result.reason}`;
+                logger.info(arguments.length)
                 if (arguments.length > 0 && typeof arguments[0].reply === 'function') {
-                    arguments[0].reply(errorMessage);
+                    arguments[0].reply(message);
                 }
-                Log.e(errorMessage);
-            } else if (result.status === 'fulfilled' && (result.value.response.subscription.active === true || result.value.response.subscription.trainingStepsLeft.purchasedTrainingSteps > 0)) {
-                this.list.push(new TaskQueue(result.value.token));
             }
         });
     }
@@ -157,7 +173,7 @@ class QueueList {
                 return this.list[this.lastTaskQueue];
             }
         } while (this.lastTaskQueue !== startQueue);
-    
+
         return null;
     }
 
