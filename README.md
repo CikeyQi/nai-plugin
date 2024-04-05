@@ -97,10 +97,13 @@ pnpm restart
    ```
 
 ### 百度翻译
-获取百度翻译token方法: <a href="https://ap-plugin.com/Config/docs10">百度翻译服务配置文档</a>
+获取百度翻译token方法：<a href="https://ap-plugin.com/Config/docs10">百度翻译服务配置文档</a>
 
 ### Stable Diffusioin API搭建
-搭建Stable Diffusioin API方法: <a href="https://ap-plugin.com/Config/docs2">绘图API部署文档</a>
+搭建Stable Diffusioin API方法：<a href="https://ap-plugin.com/Config/docs2">绘图API部署文档</a>
+
+### 腾讯云审核
+配置腾讯云审核的方法： <a href="https://docs.yunzai.art/plugins/nai-plugin/configuration/configuration2.html">Yumi文档</a>
 
 </br>
 
