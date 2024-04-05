@@ -40,7 +40,7 @@ export class userInfo extends plugin {
 
   async userInfo(e) {
     let msg = '';
-    let url = Config.getConfig().base_url + '/user/data';
+    let url = Config.getConfig().reverse_proxy.user_url + '/user/data';
     let agent = null;
     if (Config.getConfig().proxy.enable) {
       let proxy = 'http://' + Config.getConfig().proxy.host + ':' + Config.getConfig().proxy.port;

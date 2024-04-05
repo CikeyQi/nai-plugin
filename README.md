@@ -122,8 +122,10 @@ proxy:
   enable: false
   host: 127.0.0.1
   port: 7890
-# 反向代理地址（本人搭建反向代理：`https://nai3.pages.dev`）
-base_url: "https://api.novelai.net"
+# 反向代理地址（本人搭建反向代理：base_url: `https://nai3.pages.dev/base_url` user_url: `https://nai3.pages.dev/user_url`）
+reverse_proxy:
+  base_url: "https://image.novelai.net"
+  user_url: "https://api.novelai.net"
 # Stable Diffusion绘图API,如果鉴赏图片为Stable Diffusion生成,则可解析图片绘图参数
 sdapi:
   url: ""

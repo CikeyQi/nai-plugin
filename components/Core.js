@@ -15,7 +15,7 @@ import handleAxiosError from '../utils/handleAxiosError.js'
  */
 async function getPicture(param, user, type, e, token) {
   console.log("用户ID：" + user + "发起了一次请求")
-  let url = Config.getConfig().base_url + '/ai/generate-image';
+  let url = Config.getConfig().reverse_proxy.base_url + '/ai/generate-image';
   let data = defaultParam[type]
   let mergeData = _.merge({}, data, param)
   let agent = null

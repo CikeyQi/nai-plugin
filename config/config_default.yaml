@@ -4,14 +4,16 @@ proxy:
   enable: false
   host: 127.0.0.1
   port: 7890
-base_url: "https://api.novelai.net"
+reverse_proxy:
+  base_url: "https://image.novelai.net"
+  user_url: "https://api.novelai.net"
 sdapi:
   url: ""
   token: ""
 translate:
   appid: ""
   appkey: ""
-nsfw_check: "api4ai"
+nsfw_check: false
 api4ai:
   nsfw_threshold: 0.8
 tencent:

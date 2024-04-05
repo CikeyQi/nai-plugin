@@ -98,7 +98,7 @@ class QueueList {
         this.list = [];
 
         const config = await Config.getConfig();
-        const url = `${config.base_url}/user/data`;
+        const url = `${config.reverse_proxy.user_url}/user/data`;
         const { novelai_token: tokenList, proxy } = config;
         const headers = {};
 

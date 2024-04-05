@@ -107,12 +107,21 @@ export function supportGuoba() {
           },
         },
         {
-          field: "base_url",
+          field: "reverse_proxy.base_url",
           label: "反向代理",
-          bottomHelpMessage: "用于反向代理的地址",
+          bottomHelpMessage: "用于生成图片的反向代理的地址",
           component: "Input",
           componentProps: {
-            placeholder: '请输入代理地址',
+            placeholder: '请输入https://image.novelai.net的反向代理地址',
+          },
+        },
+        {
+          field: "reverse_proxy.user_url",
+          label: "反向代理",
+          bottomHelpMessage: "用于查询Token的反向代理的地址",
+          component: "Input",
+          componentProps: {
+            placeholder: '请输入https://api.novelai.net的反向代理地址',
           },
         },
         {
@@ -264,7 +273,8 @@ export function supportGuoba() {
         }
         config = lodash.merge({}, Config.getConfig(), config)
         config.novelai_token = data['novelai_token']
-        config.base_url = config.base_url.replace(/\/$/, '')
+        config.reverse_proxy.base_url = config.reverse_proxy.base_url.replace(/\/$/, '')
+        config.reverse_proxy.user_url = config.reverse_proxy.user_url.replace(/\/$/, '')
         Config.setConfig(config)
         return Result.ok({}, '保存成功~')
       },
