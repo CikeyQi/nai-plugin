@@ -4,9 +4,9 @@
 
 # NAI-PLUGIN🍓
 
-- 一个适用于 [Yunzai 系列机器人框架](https://github.com/yhArcadia/Yunzai-Bot-plugins-index) 的的 AI 绘图插件，让你在输入框中拥有便捷的AI绘画体验
+- 一个适用于 [Yunzai 系列机器人框架](https://github.com/yhArcadia/Yunzai-Bot-plugins-index) 的 AI 绘图插件，让你在输入框中拥有便捷的AI绘画体验
 
-- 使用强大的的 [NovelAI](https://novelai.net) 作为后端，**付费**使用，生成的质量高，能够模仿指定画师画风生成图片
+- 使用强大的 [NovelAI](https://novelai.net) 作为后端，**付费**使用，生成的质量高，能够模仿指定画师画风生成图片
 
 - **使用中遇到问题请加QQ群咨询：[707331865](https://qm.qq.com/q/TXTIS9KhO2)**
 
@@ -38,19 +38,19 @@ pnpm install --filter=nai-plugin
 > [!WARNING]
 > 非常不建议手动修改配置文件，本插件已兼容 [Guoba-plugin](https://github.com/guoba-yunzai/guoba-plugin) ，请使用锅巴插件对配置项进行修改
 
-- <details> <summary>获取 Token</summary>
+<details> <summary>获取 Token</summary>
 
-    1. 登录 [NovelAI](https://novelai.net/login)
+1. 登录 [NovelAI](https://novelai.net/login)
 
-    2. 打开 [NovelAI](https://novelai.net/stories)
+2. 打开 [NovelAI](https://novelai.net/stories)
 
-    3. 复制 Token</br><img src="./resources/readme/tokenstep.gif" width="100%" height="100%" alt="get_token">
+3. 复制 Token</br><img src="./resources/readme/tokenstep.gif" width="100%" height="100%" alt="get_token">
 
-    </details>
+</details>
 
-- 百度翻译请自行在控制台配置
+百度翻译请自行前往 [翻译开放平台](https://api.fanyi.baidu.com/api/trans/product/desktop) 获取 `APP ID` 和 `密钥`
 
-- 腾讯云审核配置文档：[Yumi文档](https://docs.yunzai.art/plugins/nai-plugin/configuration/configuration2.html)
+腾讯云审核配置文档：[Yumi文档](https://docs.yunzai.art/plugins/nai-plugin/configuration/configuration2.html)
 
 ## 功能列表
 
@@ -67,7 +67,8 @@ pnpm install --filter=nai-plugin
 1. 代理怎么配置
    + 代理请在 `正向代理` 和 `反向代理` 中选择一个
    + 正向代理需要服务器有代理软件，填写代理地址和端口即可
-   + 反向代理只需要填写地址即可，作者提供反向代理：base_url: `https://nai3.pages.dev/base_url`，user_url: `https://nai3.pages.dev/user_url`
+   + 反向代理只需要填写地址即可
+   + 使用作者提供反向代理请在 base_url 填写`https://nai3.pages.dev/base_url`，在 user_url 处填写`https://nai3.pages.dev/user_url`
 
 ## 支持与贡献
 
