@@ -113,7 +113,7 @@ class QueueList {
                 let response = await axios.get(url, { headers, httpsAgent: agent });
                 let { subscription } = response.data;
 
-                if (subscription.active || subscription.trainingStepsLeft.purchasedTrainingSteps > 0) {
+                if (subscription.active || subscription.trainingStepsLeft.purchasedTrainingSteps > 0 || subscription.trainingStepsLeft.fixedTrainingStepsLeft > 0 ) {
                     this.list.push(new TaskQueue(token));
                 }
                 return { status: 'fulfilled', data: response.data, token };
