@@ -260,6 +260,20 @@ export function supportGuoba() {
             placeholder: '请输入腾讯云BizType',
           },
         },
+        {
+          component: "Divider",
+          label: "其他 相关配置",
+          componentProps: {
+            orientation: "left",
+            plain: true,
+          },
+        },
+        {
+          field: "forward_msg",
+          label: "合并转发图片",
+          bottomHelpMessage: "以合并转发方式发送图片",
+          component: "Switch",
+        },
       ],
       getConfigData() {
         let config = Config.getConfig()
