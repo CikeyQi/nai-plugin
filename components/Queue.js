@@ -77,12 +77,21 @@ class TaskQueue extends EventEmitter {
 
     // 回复图片
     async replyImage(e, picInfo) {
-        await e.reply('您的图片已经生成好了，正在发送中，稍等一下哦~\n本次图片ID为：' + picInfo.fileName);
-        await e.reply([{ ...segment.image("base64://" + picInfo.base64), origin: true },
-        segment.button([
-            { text: '再来一张', callback: e.msg },
-        ])
-        ]);
+        const { forward_msg } = Config.getConfig();
+        const message = '您的图片已经生成好了，正在发送中，稍等一下哦~\n本次图片ID为：' + picInfo.fileName;
+        const image = segment.image("base64://" + picInfo.base64);
+
+        if (forward_msg) {
+            await e.reply(Bot.makeForwardMsg([
+                { message: message },
+                { message: { ...image, origin: true } }
+            ]))
+        } else {
+            await e.reply(message);
+            await e.reply([{ ...image, origin: true },
+            segment.button([{ text: '再来一张', callback: e.msg }])
+            ]);
+        }
     }
 }
 
@@ -113,7 +122,7 @@ class QueueList {
                 let response = await axios.get(url, { headers, httpsAgent: agent });
                 let { subscription } = response.data;
 
-                if (subscription.active || subscription.trainingStepsLeft.purchasedTrainingSteps > 0 || subscription.trainingStepsLeft.fixedTrainingStepsLeft > 0 ) {
+                if (subscription.active || subscription.trainingStepsLeft.purchasedTrainingSteps > 0 || subscription.trainingStepsLeft.fixedTrainingStepsLeft > 0) {
                     this.list.push(new TaskQueue(token));
                 }
                 return { status: 'fulfilled', data: response.data, token };
