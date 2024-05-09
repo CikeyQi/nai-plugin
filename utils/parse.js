@@ -83,6 +83,14 @@ function SMEAParam(text) {
     }
     return { parameters, text }
 }
+function modelParam(text) {
+    let model = "nai-diffusion-3"
+    if (text.match(/毛茸茸模型|nai-furry-3/i)) {
+        model = "nai-diffusion-furry-3"
+        text = text.replace(/毛茸茸模型|nai-furry-3/i, '')
+    }
+    return { model, text }
+}
 async function promptParam(text) {
     let parameters = {}
     let input = ''
@@ -147,6 +155,10 @@ export async function handleParam(e, text) {
     result = SMEAParam(text)
     parameters = Object.assign(parameters, result.parameters)
     text = result.text
+    // Furry模型处理
+    result = modelParam(text)
+    let model = result.model
+    text = result.text
     // 正负词条处理及翻译
     try {
         result = await promptParam(text)
@@ -165,5 +177,5 @@ export async function handleParam(e, text) {
     }
     parameters = Object.assign(parameters, result.parameters)
     let input = result.input || undefined
-    return { parameters, input }
+    return { parameters, input, model }
 }
