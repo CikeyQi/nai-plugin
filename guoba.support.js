@@ -7,18 +7,19 @@ export function supportGuoba() {
   return {
     pluginInfo: {
       name: 'nai-plugin',
-      title: 'nai-plugin',
+      title: 'AI绘画插件',
       author: ['@CikeyQi', '@erzaozi'],
       authorLink: ['https://github.com/CikeyQi', 'https://github.com/erzaozi'],
       link: 'https://github.com/CikeyQi/nai-plugin',
       isV3: true,
       isV2: false,
-      description: '基于Yunzai-Bot的AI绘图插件，使用NovelAI接口',
+      showInMenu: true,
+      description: '基于 Yunzai 的 AI 绘图插件，使用 NovelAI 接口',
       // 显示图标，此为个性化配置
       // 图标可在 https://icon-sets.iconify.design 这里进行搜索
-      icon: 'mdi:stove',
+      icon: 'fluent-emoji-flat:artist-palette',
       // 图标颜色，例：#FF0000 或 rgb(255, 0, 0)
-      iconColor: '#d19f56',
+      iconColor: '#000000',
       // 如果想要显示成图片，也可以填写图标路径（绝对路径）
       iconPath: path.join(pluginRoot, 'resources/readme/girl.png'),
     },
