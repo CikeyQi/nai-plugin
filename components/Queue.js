@@ -124,8 +124,9 @@ class QueueList {
 
                 if (subscription.active || subscription.trainingStepsLeft.purchasedTrainingSteps > 0 || subscription.trainingStepsLeft.fixedTrainingStepsLeft > 0) {
                     this.list.push(new TaskQueue(token));
+                    return { status: 'fulfilled', data: response.data, token };
                 }
-                return { status: 'fulfilled', data: response.data, token };
+                return { status: 'rejected', reason: '账户未订阅或已过期' };
             } catch (error) {
 
                 let errorMessage = "发生未知错误";

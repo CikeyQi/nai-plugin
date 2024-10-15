@@ -1,6 +1,6 @@
 {
   "name": "nai-plugin",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Yunzai-Bot插件",
   "main": "index.js",
   "scripts": {
