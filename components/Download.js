@@ -12,7 +12,7 @@ export default async function download(data, user, filename) {
         user = user.toString();
     }
     user = user.replace(/:/g, "-")
-    console.log(`${pluginResources}/userPic/${user}/${filename}.zip`)
+    logger.mark(logger.blue('[NAI PLUGIN]'), logger.cyan(`图片缓存位置：${pluginResources}/userPic/${user}/${filename}.zip`));
     if (!fs.existsSync(`${pluginResources}/userPic/${user}`)) {
         fs.mkdirSync(`${pluginResources}/userPic/${user}`);
     }

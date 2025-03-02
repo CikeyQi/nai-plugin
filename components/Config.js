@@ -1,7 +1,6 @@
 import YAML from 'yaml'
 import fs from 'fs'
 import { pluginRoot } from '../model/path.js'
-import Log from '../utils/logs.js'
 
 class Config {
   getConfig() {
@@ -11,7 +10,7 @@ class Config {
       )
       return config_yaml
     } catch (err) {
-      Log.e('读取config.yaml失败', err)
+      logger.mark(logger.blue('[NAI PLUGIN]'), logger.cyan(`读取config.yaml失败`), logger.red(err));
       return false
     }
   }
@@ -23,7 +22,7 @@ class Config {
       )
       return config_default_yaml
     } catch (err) {
-      Log.e('读取config_default.yaml失败', err)
+      logger.mark(logger.blue('[NAI PLUGIN]'), logger.cyan(`读取config_default.yaml失败`), logger.red(err));
       return false
     }
   }
@@ -36,7 +35,7 @@ class Config {
       )
       return true
     } catch (err) {
-      Log.e('写入config.yaml失败', err)
+      logger.mark(logger.blue('[NAI PLUGIN]'), logger.cyan(`写入config.yaml失败`), logger.red(err));
       return false
     }
   }

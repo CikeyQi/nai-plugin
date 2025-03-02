@@ -11,7 +11,7 @@ export async function url2Base64(url) {
     }).then(res => {
         return Buffer.from(res.data, 'binary').toString('base64')
     }).catch(err => {
-        console.log(err)
+        logger.mark(logger.blue('[NAI PLUGIN]'), logger.cyan(`图片转URL出现错误`), logger.red(err));
     })
     return base64
 }

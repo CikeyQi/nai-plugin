@@ -14,12 +14,12 @@ import handleAxiosError from '../utils/handleAxiosError.js'
  * @param {*} e 消息对象
  */
 async function getPicture(param, user, type, e, token) {
-  console.log("用户ID：" + user + "发起了一次请求")
   let url = Config.getConfig().reverse_proxy.base_url + '/ai/generate-image';
   let data = defaultParam[type]
   let mergeData = _.merge({}, data, param)
+  logger.mark(logger.blue('[NAI PLUGIN]'), logger.cyan(`用户 ${user} 发起了一次绘图请求，参数为：`));
+  logger.mark(mergeData.parameters);
   let agent = null
-  console.log(mergeData)
   if (Config.getConfig().proxy.enable) {
     let proxy = 'http://' + Config.getConfig().proxy.host + ':' + Config.getConfig().proxy.port
     agent = new HttpsProxyAgent(proxy)
@@ -73,67 +73,101 @@ const headers = {
 
 const defaultParam = {
   "txt2img": {
-    "input": "miku", // 正向提示词
-    "model": "nai-diffusion-3", // 模型
-    "action": "generate", // 动作
+    "input": "[artist:ciloranko],artist:kazutake_hazano,[artist:kedama milk],[artist:ask_(askzy)],artist:wanke,artist:wlop,artist:fujiyama,",
+    "model": "nai-diffusion-4-full",
+    "action": "generate",
     "parameters": {
-      "width": 832, // 宽度
-      "height": 1216, // 高度
-      "scale": 5, // 提示词引导系数
-      "sampler": "k_euler", // 采样方法
-      "steps": 28, // 迭代步数
-      "n_samples": 1, // 批次
-      "ucPreset": 0, // 负面提示词引导系数
-      "qualityToggle": true, // 是否开启质量优化
-      "reference_information_extracted": 1, // 参考图片信息提取
-      "reference_strength": 0.6, // 参考图片强度
-      "sm": false, // SMEA开关
-      "sm_dyn": false, // SMEA动态开关
+      "params_version": 3,
+      "width": 832,
+      "height": 1216,
+      "scale": 6,
+      "sampler": "k_euler_ancestral",
+      "steps": 23,
+      "seed": 255374418,
+      "n_samples": 1,
+      "ucPreset": 0,
+      "qualityToggle": true,
       "dynamic_thresholding": false,
       "controlnet_strength": 1,
       "legacy": false,
-      "legacy_v3_extend": false,
       "add_original_image": true,
-      "uncond_scale": 1,
-      "cfg_rescale": 0, // 提示引导重新缩放
-      "noise_schedule": "native", // 噪点调度
-      "params_version": 1, // 参数版本
-      "seed": 3032217268, // 随机种子
-      "negative_prompt": "nsfw, lowres, {bad}, error, fewer, extra, missing, worst quality, jpeg artifacts, bad quality, watermark, unfinished, displeasing, chromatic aberration, signature, extra digits, artistic error, username, scan, [abstract]" // 反向提示词
+      "cfg_rescale": 0,
+      "noise_schedule": "karras",
+      "legacy_v3_extend": false,
+      "skip_cfg_above_sigma": null,
+      "use_coords": false,
+      "characterPrompts": [],
+      "v4_prompt": {
+        "caption": {
+          "base_caption": "[artist:ciloranko],artist:kazutake_hazano,[artist:kedama milk],[artist:ask_(askzy)],artist:wanke,artist:wlop,artist:fujiyama,",
+          "char_captions": []
+        },
+        "use_coords": false,
+        "use_order": true
+      },
+      "v4_negative_prompt": {
+        "caption": {
+          "base_caption": "nsfw, lowres, {bad}, error, fewer, extra, missing, worst quality, jpeg artifacts, bad quality, watermark, unfinished, displeasing, chromatic aberration, signature, extra digits, artistic error, username, scan, [abstract]",
+          "char_captions": []
+        }
+      },
+      "negative_prompt": "nsfw, lowres, {bad}, error, fewer, extra, missing, worst quality, jpeg artifacts, bad quality, watermark, unfinished, displeasing, chromatic aberration, signature, extra digits, artistic error, username, scan, [abstract]",
+      "reference_image_multiple": [],
+      "reference_information_extracted_multiple": [],
+      "reference_strength_multiple": [],
+      "deliberate_euler_ancestral_bug": false,
+      "prefer_brownian": true
     }
   },
   "img2img": {
-    "input": "miku",
-    "model": "nai-diffusion-3",
+    "input": "[artist:ciloranko],artist:kazutake_hazano,[artist:kedama milk],[artist:ask_(askzy)],artist:wanke,artist:wlop,artist:fujiyama,",
+    "model": "nai-diffusion-4-full",
     "action": "img2img",
     "parameters": {
-      "width": 832, // 宽度
-      "height": 1216,  // 高度
-      "scale": 5, // 提示词引导系数
-      "sampler": "k_euler", // 采样方法
-      "steps": 28, // 迭代步数
-      "n_samples": 1, // 批次
+      "params_version": 3,
+      "width": 832,
+      "height": 1216,
+      "scale": 6,
+      "sampler": "k_euler_ancestral",
+      "steps": 23,
+      "seed": 123816999,
+      "n_samples": 1,
       "strength": 0.7,
-      "noise": 0,
-      "ucPreset": 0, // 负面提示词引导系数
-      "qualityToggle": true, // 是否开启质量优化
-      "reference_information_extracted": 1, // 参考图片信息提取
-      "reference_strength": 0.6, // 参考图片强度
-      "sm": false, // SMEA开关
-      "sm_dyn": false, // SMEA动态开关
+      "noise": 0.2,
+      "ucPreset": 0,
+      "qualityToggle": true,
       "dynamic_thresholding": false,
       "controlnet_strength": 1,
       "legacy": false,
-      "legacy_v3_extend": false,
       "add_original_image": true,
-      "uncond_scale": 1,
-      "cfg_rescale": 0, // 提示指导重新缩放
-      "noise_schedule": "native", // 噪点调度
-      "image": "", // 图片 base64
-      "params_version": 1, // 参数版本
-      "seed": 3263049076, // 随机种子
-      "extra_noise_seed": 3263049076,
-      "negative_prompt": "nsfw, lowres, {bad}, error, fewer, extra, missing, worst quality, jpeg artifacts, bad quality, watermark, unfinished, displeasing, chromatic aberration, signature, extra digits, artistic error, username, scan, [abstract]" // 反向提示词
+      "cfg_rescale": 0,
+      "noise_schedule": "karras",
+      "legacy_v3_extend": false,
+      "skip_cfg_above_sigma": null,
+      "use_coords": false,
+      "characterPrompts": [],
+      "image": "",
+      "extra_noise_seed": 123816999,
+      "v4_prompt": {
+        "caption": {
+          "base_caption": "[artist:ciloranko],artist:kazutake_hazano,[artist:kedama milk],[artist:ask_(askzy)],artist:wanke,artist:wlop,artist:fujiyama,",
+          "char_captions": []
+        },
+        "use_coords": false,
+        "use_order": true
+      },
+      "v4_negative_prompt": {
+        "caption": {
+          "base_caption": "nsfw, lowres, {bad}, error, fewer, extra, missing, worst quality, jpeg artifacts, bad quality, watermark, unfinished, displeasing, chromatic aberration, signature, extra digits, artistic error, username, scan, [abstract]",
+          "char_captions": []
+        }
+      },
+      "negative_prompt": "nsfw, lowres, {bad}, error, fewer, extra, missing, worst quality, jpeg artifacts, bad quality, watermark, unfinished, displeasing, chromatic aberration, signature, extra digits, artistic error, username, scan, [abstract]",
+      "reference_image_multiple": [],
+      "reference_information_extracted_multiple": [],
+      "reference_strength_multiple": [],
+      "deliberate_euler_ancestral_bug": false,
+      "prefer_brownian": true
     }
   }
 }

@@ -9,7 +9,6 @@ export async function baiduTranslate(keyword) {
     let url = `http://api.fanyi.baidu.com/api/trans/vip/translate?q=${keyword}&from=zh&to=en&appid=${config.translate.appid}&salt=${salt}&sign=${sign}`;
     try {
         let json = (await axios.get(url)).data;
-        console.log(json)
         if (json.error_code) {
             return {
                 status: false,
@@ -17,14 +16,13 @@ export async function baiduTranslate(keyword) {
             }
         } else {
             let prompt = json.trans_result[0].dst
-            console.log(`【描述词翻译】${json.trans_result[0].src} ==> ${json.trans_result[0].dst}`);
             return {
                 status: true,
                 msg: prompt
             }
         }
     } catch (error) {
-        console.error(error);
+        logger.mark(logger.blue('[NAI PLUGIN]'), logger.cyan(`百度翻译出现错误`), logger.red(error));
         return {
             status: false,
             msg: "翻译失败，请检查控制台输出"
@@ -33,7 +31,7 @@ export async function baiduTranslate(keyword) {
 }
 
 function handleTranslateError(error_code) {
-    console.log(error_code)
+    logger.mark(logger.blue('[NAI PLUGIN]'), logger.cyan(`百度翻译错误码`), logger.red(error_code));
     switch (error_code) {
         case 52001:
             return "请求超时，请重试";

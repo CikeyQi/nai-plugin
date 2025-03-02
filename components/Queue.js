@@ -3,7 +3,6 @@ import EventEmitter from 'events';
 import axios from 'axios';
 import { HttpsProxyAgent } from 'https-proxy-agent';
 import _ from 'lodash';
-import Log from '../utils/logs.js';
 import getPicture from './Core.js';
 import { nsfwCheck } from '../utils/nsfw.js';
 import Config from './Config.js';
@@ -67,7 +66,7 @@ class TaskQueue extends EventEmitter {
                 await this.replyImage(task.e, picInfo);
             }
         } catch (error) {
-            Log.e(error);
+            logger.mark(logger.blue('[NAI PLUGIN]'), logger.cyan(`获取生成图片出错`), logger.red(error));
             task.e.reply('出错啦，请联系开发者');
         } finally {
             this.lock = false; // 解锁队列，处理下一个任务

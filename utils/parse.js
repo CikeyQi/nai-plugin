@@ -38,12 +38,12 @@ function scaleParam(text) {
 }
 function samplerParam(text) {
     const samplers = {
-        'Euler a': 'k_euler_ancestral',
+        'Euler Ancestral': 'k_euler_ancestral',
+        'DPM++ 2S Ancestral': 'k_dpmpp_2s_ancestral',
+        'DPM++ 2M SDE': 'k_dpmpp_2m_sde',
         'Euler': 'k_euler',
-        'DPM++ 2S a': 'k_dpmpp_2s_a',
         'DPM++ 2M': 'k_dpmpp_2m',
         'DPM++ SDE': 'k_dpmpp_sde',
-        'DDIM': 'ddim',
     }
     let parameters = null
     Object.entries(samplers).forEach(([alias, sampler]) => {
@@ -56,13 +56,13 @@ function samplerParam(text) {
 }
 function seedParam(text) {
     let parameters = {}
-    let seed = text.match(/seed(\s)?=(\d{1,10})/)?.[2]
+    let seed = text.match(/种子\s?(\d{9})/)?.[1]
     if (seed) {
         parameters.seed = Number(seed)
     } else {
         parameters.seed = Math.floor((Math.random() + Math.floor(Math.random() * 9 + 1)) * Math.pow(10, 9))
     }
-    text = text.replace(/seed(\s)?=(\d{1,10})/g, '')
+    text = text.replace(/种子\s?\d+/g, '')
     return { parameters, text }
 }
 function stepsParam(text) {
@@ -74,22 +74,34 @@ function stepsParam(text) {
     text = text.replace(/步数\s?\d+/g, '')
     return { parameters, text }
 }
-function SMEAParam(text) {
-    let parameters = {}
-    if (text.match(/smea/i)) {
-        parameters.sm = true
-        parameters.sm_dyn = true
-        text = text.replace(/smea/i, '')
-    }
-    return { parameters, text }
-}
-function modelParam(text) {
-    let model = "nai-diffusion-3"
-    if (text.match(/毛茸茸模型|nai-furry-3/i)) {
-        model = "nai-diffusion-furry-3"
-        text = text.replace(/毛茸茸模型|nai-furry-3/i, '')
-    }
-    return { model, text }
+
+async function advancedParam(text) {
+    const parameters = {};
+    const regex = /(?:\s+)?--([a-zA-Z0-9_\.]+)\s+([^\s]+)/g;
+
+    text = text.replace(regex, (match, key, value) => {
+        const keys = key.split('.');
+        let current = parameters;
+
+        for (let i = 0; i < keys.length - 1; i++) {
+            const part = keys[i];
+            current[part] = current[part] || {};
+            current = current[part];
+        }
+
+        let finalValue = value.trim();
+        if (finalValue === 'true' || finalValue === 'false') {
+            finalValue = finalValue === 'true' ? true : false;
+        } else if (!isNaN(Number(finalValue))) {
+            finalValue = Number(finalValue);
+        }
+
+        current[keys[keys.length - 1]] = finalValue;
+
+        return '';
+    });
+
+    return { parameters, text };
 }
 async function promptParam(text) {
     let parameters = {}
@@ -102,7 +114,6 @@ async function promptParam(text) {
     }
     async function translator(wordText) {
         let wordList = wordText.split(/[,，]+/)
-        console.log(wordList)
         for (let i = 0; i < wordList.length; i++) {
             if (!wordList[i].match(/[\u4e00-\u9fa5]/g)) continue
             try {
@@ -113,7 +124,7 @@ async function promptParam(text) {
                     wordList[i] = null
                 }
             } catch (error) {
-                throw error
+                throw new Error("翻译服务出错", { cause: error });
             }
         }
         wordList = wordList.filter(item => item !== null)
@@ -125,12 +136,23 @@ async function promptParam(text) {
             ntags = await translator(ntags)
         }
     } catch (error) {
-        throw error
+        throw new Error(`处理输入时出错: ${error.message}`, { cause: error });
     }
+
+    input = input.trim();
+
     if (ntags) {
-        parameters.negative_prompt = ntags
+        parameters.negative_prompt = ntags;
+        parameters.v4_negative_prompt = { caption: { base_caption: ntags } };
     }
-    return (input === '') ? { parameters } : { parameters, input }
+
+    const result = { parameters };
+    if (input) {
+        result.input = input;
+        parameters.v4_prompt = { caption: { base_caption: input } };
+    }
+
+    return result;
 }
 export async function handleParam(e, text) {
     let parameters = {}
@@ -151,13 +173,9 @@ export async function handleParam(e, text) {
     result = seedParam(text)
     parameters = Object.assign(parameters, result.parameters)
     text = result.text
-    // SMEA处理
-    result = SMEAParam(text)
+    // 处理高级传参方法
+    result = await advancedParam(text)
     parameters = Object.assign(parameters, result.parameters)
-    text = result.text
-    // Furry模型处理
-    result = modelParam(text)
-    let model = result.model
     text = result.text
     // 正负词条处理及翻译
     try {
@@ -177,5 +195,5 @@ export async function handleParam(e, text) {
     }
     parameters = Object.assign(parameters, result.parameters)
     let input = result.input || undefined
-    return { parameters, input, model }
+    return { parameters, input }
 }

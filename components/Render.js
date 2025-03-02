@@ -1,6 +1,5 @@
 import Version from './Version.js'
 import { pluginRoot } from '../model/path.js'
-import Log from '../utils/logs.js'
 import fs from 'fs'
 
 function scale(pct = 1) {
@@ -26,7 +25,7 @@ const Render = {
                 currentVersion = package_json.version
             }
         } catch (err) {
-            Log.e('读取package.json失败', err)
+            logger.mark(logger.blue('[NAI PLUGIN]'), logger.cyan(`读取package.json失败`), logger.red(err));
         }
         return e.runtime.render('nai-plugin', path, params, {
             retType: cfg.retMsgId ? 'msgId' : 'default',
