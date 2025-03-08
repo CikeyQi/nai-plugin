@@ -63,35 +63,48 @@ const TRANSLATE_STRATEGIES = {
             return data.trans_result[0].dst
         }
     },
-    gemini: {
+    openai: {
         handler: async (keyword, config) => {
-            const { proxy: { enable, host, port }, translate: { gemini: { base_url, model, apikey } } } = config
-            const agent = enable && new HttpsProxyAgent(`http://${host}:${port}`)
-            const response = await axios.post(
-                `${base_url}/v1beta/models/${model}:generateContent`,
-                {
-                    system_instruction: {
-                        parts: {
-                            text: SYSTEM
-                        }
-                    },
-                    contents: {
-                        parts: {
-                            text: `请将以下中文描述翻译为英文关键词，并为重要元素添加权重标记：${keyword}`
-                        }
-                    }
-                },
-                {
-                    params: { key: apikey },
-                    headers: { 'Content-Type': 'application/json' },
-                    httpsAgent: agent
-                }
-            )
+            const {
+                proxy: { enable, host, port },
+                translate: { openai: { base_url, model, apikey } }
+            } = config;
 
-            const text = response.data?.candidates?.[0]?.content?.parts?.[0]?.text
-            if (!text) throw new Error('Gemini翻译功能出现问题')
-                console.log(text)
-            return text
+            const agent = enable && new HttpsProxyAgent(`http://${host}:${port}`);
+
+            try {
+                const response = await axios.post(
+                    `${base_url}/chat/completions`,
+                    {
+                        model: model,
+                        messages: [
+                            {
+                                role: "system",
+                                content: SYSTEM
+                            },
+                            {
+                                role: "user",
+                                content: `请将以下中文描述翻译为英文关键词，并为重要元素添加权重标记：${keyword}`
+                            }
+                        ]
+                    },
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${apikey}`
+                        },
+                        httpsAgent: agent
+                    }
+                );
+
+                const text = response.data?.choices?.[0]?.message?.content;
+                if (!text) throw new Error('OpenAI 翻译功能出现问题');
+
+                return text;
+            } catch (error) {
+                logger.mark(logger.blue('[NAI PLUGIN]'), logger.cyan(`AI 翻译功能出现问题`), logger.red(error));
+                throw new Error('AI 翻译服务暂不可用');
+            }
         }
     }
 }

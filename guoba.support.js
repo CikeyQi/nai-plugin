@@ -137,7 +137,7 @@ export function supportGuoba() {
             options: [
               { label: "不使用翻译", value: null },
               { label: "使用百度翻译", value: "baidu" },
-              { label: "使用 Gemini 翻译", value: "gemini" },
+              { label: "使用 AI 翻译", value: "openai" },
             ],
           },
         },
@@ -172,34 +172,34 @@ export function supportGuoba() {
         },
         {
           component: "Divider",
-          label: "Gemini 翻译",
+          label: "AI 翻译",
           componentProps: {
             orientation: "left",
             plain: true,
           },
         },
         {
-          field: "translate.gemini.base_url",
+          field: "translate.openai.base_url",
           label: "反向代理",
           component: "Input",
           componentProps: {
-            placeholder: "请输入https://generativelanguage.googleapis.com的反向代理地址"
+            placeholder: "请输入 https://api.openai.com/v1 的反向代理地址"
           },
         },
         {
-          field: "translate.gemini.model",
+          field: "translate.openai.model",
           label: "模型名称",
           component: "Input",
           componentProps: {
-            placeholder: "请输入Gemini模型名称"
+            placeholder: "请输入模型名称"
           },
         },
         {
-          field: "translate.gemini.apikey",
+          field: "translate.openai.apikey",
           label: "APIKEY",
           component: "InputPassword",
           componentProps: {
-            placeholder: "请输入Gemini官方APIKEY",
+            placeholder: "请输入APIKEY",
             visible: false,
           },
         },

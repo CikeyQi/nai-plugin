@@ -63,41 +63,46 @@ export class help extends plugin {
                 "list": [
                     {
                         "icon": 4,
+                        "title": "--uc nsfw",
+                        "desc": "设置本次绘制负面提示词"
+                    },
+                    {
+                        "icon": 5,
                         "title": "--w 832",
                         "desc": "设置本次绘制宽度"
                     },
                     {
-                        "icon": 5,
+                        "icon": 6,
                         "title": "--h 1216",
                         "desc": "设置本次绘制高度"
                     },
                     {
-                        "icon": 6,
+                        "icon": 7,
                         "title": `--sa "Euler Ancestral"`,
                         "desc": "设置本次绘制采样器"
                     },
                     {
-                        "icon": 7,
+                        "icon": 8,
                         "title": "--st 28",
                         "desc": "设置本次绘制迭代步数"
                     },
                     {
-                        "icon": 8,
+                        "icon": 9,
                         "title": "--g 6",
                         "desc": "设置本次绘制提示引导"
                     },
                     {
-                        "icon": 9,
+                        "icon": 10,
                         "title": "--gr 0",
                         "desc": "设置本次绘制重绘比例"
                     },
                     {
-                        "icon": 10,
+                        "icon": 11,
                         "title": "--ns karras",
                         "desc": "设置本次绘制降噪方法"
                     },
                     {
-                        "icon": 11,
+                        "icon": 12,
                         "title": "--<key> <value>",
                         "desc": "更多<key> <value>请参考官方 API 文档"
                     }
@@ -107,22 +112,22 @@ export class help extends plugin {
                 "group": "角色",
                 "list": [
                     {
-                        "icon": 12,
+                        "icon": 13,
                         "title": "--character <位置> <正面> <负面>",
                         "desc": "自定义单独角色"
                     },
                     {
-                        "icon": 13,
+                        "icon": 14,
                         "title": "<位置>",
                         "desc": "非必填，同官网，格式：A1 E5 B3..."
                     },
                     {
-                        "icon": 14,
+                        "icon": 15,
                         "title": "<正面>",
                         "desc": "必填，单角色正面提示词"
                     },
                     {
-                        "icon": 15,
+                        "icon": 16,
                         "title": "<负面>",
                         "desc": "非必填，单角色负面提示词"
                     },
@@ -132,22 +137,22 @@ export class help extends plugin {
                 "group": "预设",
                 "list": [
                     {
-                        "icon": 16,
+                        "icon": 17,
                         "title": "/pset",
                         "desc": "查看预设"
                     },
                     {
-                        "icon": 17,
+                        "icon": 18,
                         "title": "/pset --add <名称> <内容>",
                         "desc": "添加预设"
                     },
                     {
-                        "icon": 18,
+                        "icon": 19,
                         "title": "/pset --find <名称>",
                         "desc": "检索预设"
                     },
                     {
-                        "icon": 19,
+                        "icon": 20,
                         "title": "/pset --del <名称>",
                         "desc": "删除预设"
                     }
@@ -157,27 +162,27 @@ export class help extends plugin {
                 "group": "插件",
                 "list": [
                     {
-                        "icon": 20,
+                        "icon": 21,
                         "title": "/nai --find <图片ID>",
                         "desc": "查找本地绘制图片"
                     },
                     {
-                        "icon": 21,
+                        "icon": 22,
                         "title": "/nai --info",
                         "desc": "查看当前账户信息"
                     },
                     {
-                        "icon": 22,
+                        "icon": 23,
                         "title": "/nai --reload",
                         "desc": "重载账户信息"
                     },
                     {
-                        "icon": 23,
+                        "icon": 24,
                         "title": "/nai --update",
                         "desc": "插件更新"
                     },
                     {
-                        "icon": 24,
+                        "icon": 25,
                         "title": "/nai --help",
                         "desc": "插件帮助列表"
                     }

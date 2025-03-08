@@ -20,7 +20,7 @@ export class Image extends plugin {
   }
 
   async image(e) {
-    if (!queue.list.length) return e.reply('无可用Token\n- 请先添加Token后使用该功能\n- 使用「/nai reload」指令刷新已经配置的Token')
+    if (!queue.list.length) return e.reply('无可用Token\n- 请先添加Token后使用该功能\n- 使用「/nai --reload」指令刷新已经配置的Token')
     if (!e.img) return e.reply('请携带图片发送指令')
 
     let msg = e.msg.match(this.rule[0].reg)[1]

@@ -19,7 +19,7 @@ export class Text extends plugin {
   }
 
   async text(e) {
-    if (!queue.list.length) return e.reply('无可用Token\n- 请先添加Token后使用该功能\n- 使用「/nai reload」指令刷新已经配置的Token')
+    if (!queue.list.length) return e.reply('无可用Token\n- 请先添加Token后使用该功能\n- 使用「/nai --reload」指令刷新已经配置的Token')
 
     let msg = e.msg.match(this.rule[0].reg)[1]
     await redis.set(`nai:again:${e.user_id}`, JSON.stringify({
