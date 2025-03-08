@@ -17,7 +17,6 @@ export default async function download(data, user, filename) {
         fs.mkdirSync(`${pluginResources}/userPic/${user}`);
     }
     await fs.writeFileSync(`${pluginResources}/userPic/${user}/${filename}.zip`, data);
-    // 解压zip，取出image_0.png放在同级目录，重命名为filename.png，删除zip
     const zip = new admzip(`${pluginResources}/userPic/${user}/${filename}.zip`);
     zip.extractAllTo(`${pluginResources}/userPic/${user}`, true);
     fs.unlinkSync(`${pluginResources}/userPic/${user}/${filename}.zip`);

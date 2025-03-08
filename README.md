@@ -70,7 +70,7 @@ pnpm install --filter=nai-plugin
    - 代理请在 `正向代理` 和 `反向代理` 中选择一个
    - 正向代理需要服务器有代理软件，填写代理地址和端口即可
    - 反向代理只需要填写地址即可
-   - 使用作者提供反向代理请在 base_url 填写`https://nai3.pages.dev/base_url`，在 user_url 处填写`https://nai3.pages.dev/user_url`
+   - 使用作者提供反向代理请在 **图片代理** 填写`https://nai3.pages.dev/base_url`，在 **接口代理** 处填写`https://nai3.pages.dev/user_url`
 
 ## 支持与贡献
 

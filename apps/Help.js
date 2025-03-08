@@ -16,7 +16,7 @@ export class help extends plugin {
             rule: [
                 {
                     /** 命令正则匹配 */
-                    reg: '^(/|#)绘画帮助$',
+                    reg: '^[/#]nai --help$',
                     /** 执行方法 */
                     fnc: 'help'
                 }
@@ -28,7 +28,6 @@ export class help extends plugin {
         const helpCfg = {
             "themeSet": false,
             "title": "NovelAI帮助",
-            // "subTitle": "Yunzai-Bot & nai-plugin",
             "subTitle": "NovelAI-Bot",
             "colWidth": 265,
             "theme": "all",
@@ -40,49 +39,149 @@ export class help extends plugin {
         }
         const helpList = [
             {
-                "group": "NovelAI绘图帮助",
+                "group": "绘图",
                 "list": [
                     {
                         "icon": 1,
-                        "title": "/绘画",
-                        "desc": "根据用户输入的提示词生成图片"
+                        "title": "/draw",
+                        "desc": "文生图功能"
                     },
                     {
-                        "icon": 5,
-                        "title": "/以图画图",
-                        "desc": "根据用户输入的图片生成图片"
-                    },
-                    {
-                        "icon": 7,
-                        "title": "/重画",
-                        "desc": "重复自己上一次生成图片操作"
-                    },
-                    {
-                        "icon": 11,
-                        "title": "/查找图片",
-                        "desc": "根据图片ID查找自己绘图结果"
-                    },
-                    {
-                        "icon": 54,
-                        "title": "/大清晰术",
-                        "desc": "图片超分辨率"
-                    },
-                    {
-                        "icon": 86,
-                        "title": "/绑定画风",
-                        "desc": "绑定画师ID模仿画风"
+                        "icon": 2,
+                        "title": "/image",
+                        "desc": "图生图功能"
                     },
                     {
                         "icon": 3,
-                        "title": "/审核图片",
-                        "desc": "对图片内容进行违规审核"
+                        "title": "/re",
+                        "desc": "重新执行上次绘制"
+                    }
+                ]
+            },
+            {
+                "group": "参数",
+                "list": [
+                    {
+                        "icon": 4,
+                        "title": "--w 832",
+                        "desc": "设置本次绘制宽度"
                     },
                     {
-                        "icon": 38,
-                        "title": "/使用帮助",
-                        "desc": "查看机器人使用方法与相关功能"
+                        "icon": 5,
+                        "title": "--h 1216",
+                        "desc": "设置本次绘制高度"
+                    },
+                    {
+                        "icon": 6,
+                        "title": `--sa "Euler Ancestral"`,
+                        "desc": "设置本次绘制采样器"
+                    },
+                    {
+                        "icon": 7,
+                        "title": "--st 28",
+                        "desc": "设置本次绘制迭代步数"
+                    },
+                    {
+                        "icon": 8,
+                        "title": "--g 6",
+                        "desc": "设置本次绘制提示引导"
+                    },
+                    {
+                        "icon": 9,
+                        "title": "--gr 0",
+                        "desc": "设置本次绘制重绘比例"
+                    },
+                    {
+                        "icon": 10,
+                        "title": "--ns karras",
+                        "desc": "设置本次绘制降噪方法"
+                    },
+                    {
+                        "icon": 11,
+                        "title": "--<key> <value>",
+                        "desc": "更多<key> <value>请参考官方 API 文档"
                     }
-                ],
+                ]
+            },
+            {
+                "group": "角色",
+                "list": [
+                    {
+                        "icon": 12,
+                        "title": "--character <位置> <正面> <负面>",
+                        "desc": "自定义单独角色"
+                    },
+                    {
+                        "icon": 13,
+                        "title": "<位置>",
+                        "desc": "非必填，同官网，格式：A1 E5 B3..."
+                    },
+                    {
+                        "icon": 14,
+                        "title": "<正面>",
+                        "desc": "必填，单角色正面提示词"
+                    },
+                    {
+                        "icon": 15,
+                        "title": "<负面>",
+                        "desc": "非必填，单角色负面提示词"
+                    },
+                ]
+            },
+            {
+                "group": "预设",
+                "list": [
+                    {
+                        "icon": 16,
+                        "title": "/pset",
+                        "desc": "查看预设"
+                    },
+                    {
+                        "icon": 17,
+                        "title": "/pset --add <名称> <内容>",
+                        "desc": "添加预设"
+                    },
+                    {
+                        "icon": 18,
+                        "title": "/pset --find <名称>",
+                        "desc": "检索预设"
+                    },
+                    {
+                        "icon": 19,
+                        "title": "/pset --del <名称>",
+                        "desc": "删除预设"
+                    }
+                ]
+            },
+            {
+                "group": "插件",
+                "list": [
+                    {
+                        "icon": 20,
+                        "title": "/nai --find <图片ID>",
+                        "desc": "查找本地绘制图片"
+                    },
+                    {
+                        "icon": 21,
+                        "title": "/nai --info",
+                        "desc": "查看当前账户信息"
+                    },
+                    {
+                        "icon": 22,
+                        "title": "/nai --reload",
+                        "desc": "重载账户信息"
+                    },
+                    {
+                        "icon": 23,
+                        "title": "/nai --update",
+                        "desc": "插件更新"
+                    },
+                    {
+                        "icon": 24,
+                        "title": "/nai --help",
+                        "desc": "插件帮助列表"
+                    }
+                ]
             }
         ]
         let helpGroup = []

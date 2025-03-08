@@ -1,46 +1,40 @@
 import plugin from '../../../lib/plugins/plugin.js'
-import { txt2img } from './Txt2img.js'
-import { img2img } from './Img2img.js'
 
-export class again extends plugin {
+export class Again extends plugin {
     constructor() {
         super({
-            /** 功能名称 */
             name: 'nai-重新绘制',
-            /** 功能描述 */
             dsc: '重新绘制图片',
             event: 'message',
-            /** 优先级，数字越小等级越高 */
             priority: 1009,
-            rule: [
-                {
-                    /** 命令正则匹配 */
-                    reg: '^(/|#)重画$',
-                    /** 执行方法 */
-                    fnc: 'again'
-                }
-            ]
+            rule: [{
+                reg: '^[/#]re$',
+                fnc: 'again'
+            }]
         })
+
+        this.handlers = {
+            text: () => import('./Text.js').then(m => new m.Text()),
+            image: () => import('./Image.js').then(m => new m.Image())
+        }
     }
 
     async again(e) {
-        const usageData = await redis.get(`nai:again:${e.user_id}`);
-        if (!usageData) {
-            e.reply("太久远了，我也忘记上一次绘的图是什么了");
-            return false;
+        try {
+            const usageData = await redis.get(`nai:again:${e.user_id}`)
+            if (!usageData) return e.reply("未能查询到上次绘制的信息，请使用/draw 命令进行新的绘制")
+
+            const { msg, img, type } = JSON.parse(usageData)
+            Object.assign(e, { msg, img })
+
+            if (this.handlers[type]) {
+                const handler = await this.handlers[type]()
+                return handler[type](e)
+            }
+
+            return e.reply("上次绘制信息异常，请使用/draw 命令进行新的绘制")
+        } catch (error) {
+            return e.reply(error.message || '未知错误，请检查控制台日志')
         }
-    
-        const { msg, img, type } = JSON.parse(usageData);
-        if (msg) e.msg = msg;
-        if (img) e.img = img;
-    
-        if (type === 'txt2img') {
-            const againTxt2img = new txt2img();
-            await againTxt2img.txt2img(e);
-        } else {
-            const againImg2img = new img2img();
-            await againImg2img.img2img(e);
-        }
-        return true;
     }
 }

@@ -5,22 +5,38 @@ proxy:
   host: 127.0.0.1
   port: 7890
 reverse_proxy:
-  base_url: "https://image.novelai.net"
-  user_url: "https://api.novelai.net"
-sdapi:
-  url: ""
-  token: ""
+  base_url: https://image.novelai.net
+  user_url: https://api.novelai.net
 translate:
-  appid: ""
-  appkey: ""
-nsfw_check: false
-api4ai:
-  nsfw_threshold: 0.8
-tencent:
-  SecretId: ""
-  SecretKey: ""
-  Bucket: ""
-  Region: ""
-  BizType: ""
+  engine: null
+  gemini:
+    base_url: https://generativelanguage.googleapis.com
+    model: gemini-2.0-flash
+    apikey: null
+  baidu:
+    appid: null
+    appkey: null
+nsfw_check:
+  engine: null
+  api4ai:
+    nsfw_threshold: 0.8
+  tencent:
+    SecretId: null
+    SecretKey: null
+    Bucket: null
+    Region: null
+    BizType: null
 free_mode: true
 forward_msg: false
+parameters:
+  width: 832
+  height: 1216
+  scale: 6
+  sampler: k_euler_ancestral
+  steps: 23
+  cfg_rescale: 0
+  noise_schedule: karras
+  negative_prompt: nsfw, lowres, {bad}, error, fewer, extra, missing, worst
+    quality, jpeg artifacts, bad quality, watermark, unfinished, displeasing,
+    chromatic aberration, signature, extra digits, artistic error, username,
+    scan, [abstract]

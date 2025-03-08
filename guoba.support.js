@@ -26,17 +26,12 @@ export function supportGuoba() {
     configInfo: {
       schemas: [
         {
-          component: "Divider",
-          label: "NovelAI 相关配置",
-          componentProps: {
-            orientation: "left",
-            plain: true,
-          },
+          component: "SOFT_GROUP_BEGIN",
+          label: "账户"
         },
         {
           field: "novelai_token",
-          label: "账号池",
-          bottomHelpMessage: "用于调用NovelAI的绘画接口",
+          label: "账号列表",
           component: "GTags",
           componentProps: {
             placeholder: '请输入您的NovelAI Token',
@@ -44,8 +39,8 @@ export function supportGuoba() {
             allowDel: true,
             showPrompt: true,
             promptProps: {
-              content: '请填写您的NovelAI Token',
-              placeholder: 'pst-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+              content: '请填写您的 NovelAI Token',
+              placeholder: 'pst-xxx...',
               okText: '添加',
               rules: [
                 { required: true, message: 'NovelAI Token不能为空' },
@@ -57,8 +52,7 @@ export function supportGuoba() {
         },
         {
           field: "use_token",
-          label: "指定Token",
-          bottomHelpMessage: "使用指定的Token，当值为0时轮询",
+          label: "指定账号",
           component: "InputNumber",
           componentProps: {
             min: 0,
@@ -68,13 +62,16 @@ export function supportGuoba() {
         },
         {
           field: "free_mode",
-          label: "启用免费模式",
-          bottomHelpMessage: "免费模式下，不使用点数",
+          label: "免费模式",
           component: "Switch",
         },
         {
+          component: "SOFT_GROUP_BEGIN",
+          label: "代理"
+        },
+        {
           component: "Divider",
-          label: "代理 相关配置",
+          label: "主动代理",
           componentProps: {
             orientation: "left",
             plain: true,
@@ -83,13 +80,11 @@ export function supportGuoba() {
         {
           field: "proxy.enable",
           label: "启用代理",
-          bottomHelpMessage: "代理开关",
           component: "Switch",
         },
         {
           field: "proxy.host",
           label: "代理地址",
-          bottomHelpMessage: "代理服务器地址",
           component: "Input",
           componentProps: {
             placeholder: '请输入代理地址',
@@ -98,7 +93,6 @@ export function supportGuoba() {
         {
           field: "proxy.port",
           label: "代理端口",
-          bottomHelpMessage: "代理服务器端口",
           component: "InputNumber",
           componentProps: {
             placeholder: '请输入代理端口',
@@ -108,62 +102,56 @@ export function supportGuoba() {
           },
         },
         {
-          field: "reverse_proxy.base_url",
+          component: "Divider",
           label: "反向代理",
-          bottomHelpMessage: "用于生成图片的反向代理的地址",
+          componentProps: {
+            orientation: "left",
+            plain: true,
+          },
+        },
+        {
+          field: "reverse_proxy.base_url",
+          label: "图片代理",
           component: "Input",
           componentProps: {
-            placeholder: '请输入https://image.novelai.net的反向代理地址',
+            placeholder: '请输入 https://image.novelai.net 的反向代理地址',
           },
         },
         {
           field: "reverse_proxy.user_url",
-          label: "反向代理",
-          bottomHelpMessage: "用于查询Token的反向代理的地址",
+          label: "接口代理",
           component: "Input",
           componentProps: {
-            placeholder: '请输入https://api.novelai.net的反向代理地址',
+            placeholder: '请输入 https://api.novelai.net 的反向代理地址',
+          },
+        },
+        {
+          component: "SOFT_GROUP_BEGIN",
+          label: "翻译"
+        },
+        {
+          field: "translate.engine",
+          label: "翻译引擎",
+          component: "Select",
+          componentProps: {
+            options: [
+              { label: "不使用翻译", value: null },
+              { label: "使用百度翻译", value: "baidu" },
+              { label: "使用 Gemini 翻译", value: "gemini" },
+            ],
           },
         },
         {
           component: "Divider",
-          label: "鉴赏 相关配置",
+          label: "百度翻译",
           componentProps: {
             orientation: "left",
             plain: true,
           },
         },
         {
-          field: "sdapi.url",
-          label: "接口地址",
-          bottomHelpMessage: "用于鉴赏的接口地址",
-          component: "Input",
-          componentProps: {
-            placeholder: '请输入Stable Diffusion接口地址',
-          },
-        },
-        {
-          field: "sdapi.token",
-          label: "接口Token",
-          bottomHelpMessage: "用于鉴赏的接口Token",
-          component: "InputPassword",
-          componentProps: {
-            placeholder: '请输入Stable Diffusion接口Token',
-            visible: false,
-          },
-        },
-        {
-          component: "Divider",
-          label: "翻译 相关配置",
-          componentProps: {
-            orientation: "left",
-            plain: true,
-          },
-        },
-        {
-          field: "translate.appid",
+          field: "translate.baidu.appid",
           label: "APPID",
-          bottomHelpMessage: "用于翻译中文提示词",
           component: "Input",
           componentProps: {
             placeholder: "请输入百度翻译APPID",
@@ -173,9 +161,8 @@ export function supportGuoba() {
           },
         },
         {
-          field: "translate.appkey",
+          field: "translate.baidu.appkey",
           label: "APPKEY",
-          bottomHelpMessage: "用于翻译中文提示词",
           component: "InputPassword",
           componentProps: {
             placeholder: "请输入百度翻译APPKEY",
@@ -185,29 +172,64 @@ export function supportGuoba() {
         },
         {
           component: "Divider",
-          label: "审核 相关配置",
+          label: "Gemini 翻译",
           componentProps: {
             orientation: "left",
             plain: true,
           },
         },
         {
-          field: "nsfw_check",
-          label: "审核方式",
-          bottomHelpMessage: "选择图片审核方式",
+          field: "translate.gemini.base_url",
+          label: "反向代理",
+          component: "Input",
+          componentProps: {
+            placeholder: "请输入https://generativelanguage.googleapis.com的反向代理地址"
+          },
+        },
+        {
+          field: "translate.gemini.model",
+          label: "模型名称",
+          component: "Input",
+          componentProps: {
+            placeholder: "请输入Gemini模型名称"
+          },
+        },
+        {
+          field: "translate.gemini.apikey",
+          label: "APIKEY",
+          component: "InputPassword",
+          componentProps: {
+            placeholder: "请输入Gemini官方APIKEY",
+            visible: false,
+          },
+        },
+        {
+          component: "SOFT_GROUP_BEGIN",
+          label: "审核"
+        },
+        {
+          field: "nsfw_check.engine",
+          label: "审核引擎",
           component: "Select",
           componentProps: {
             options: [
-              { label: "不审核", value: false },
-              { label: "使用api4ai", value: "api4ai" },
-              { label: "使用腾讯云（需配置）", value: "tencent" },
+              { label: "不审核", value: null },
+              { label: "使用 api4ai", value: "api4ai" },
+              { label: "使用腾讯云", value: "tencent" },
             ],
           },
         },
         {
-          field: "api4ai.nsfw_threshold",
-          label: "api4ai审核阈值",
-          bottomHelpMessage: "审核阈值，0-1之间",
+          component: "Divider",
+          label: "API4AI 审核",
+          componentProps: {
+            orientation: "left",
+            plain: true,
+          },
+        },
+        {
+          field: "nsfw_check.api4ai.nsfw_threshold",
+          label: "审核阈值",
           component: "InputNumber",
           componentProps: {
             min: 0,
@@ -216,18 +238,24 @@ export function supportGuoba() {
           },
         },
         {
-          field: "tencent.SecretId",
+          component: "Divider",
+          label: "腾讯云审核",
+          componentProps: {
+            orientation: "left",
+            plain: true,
+          },
+        },
+        {
+          field: "nsfw_check.tencent.SecretId",
           label: "SecretId",
-          bottomHelpMessage: "腾讯云SecretId",
           component: "Input",
           componentProps: {
             placeholder: '请输入腾讯云SecretId',
           },
         },
         {
-          field: "tencent.SecretKey",
+          field: "nsfw_check.tencent.SecretKey",
           label: "SecretKey",
-          bottomHelpMessage: "腾讯云SecretKey",
           component: "InputPassword",
           componentProps: {
             placeholder: '请输入腾讯云SecretKey',
@@ -235,44 +263,125 @@ export function supportGuoba() {
           },
         },
         {
-          field: "tencent.Bucket",
+          field: "nsfw_check.tencent.Bucket",
           label: "Bucket",
-          bottomHelpMessage: "腾讯云存储桶（如：example-1250000000）",
           component: "Input",
           componentProps: {
             placeholder: '请输入腾讯云Bucket',
           },
         },
         {
-          field: "tencent.Region",
+          field: "nsfw_check.tencent.Region",
           label: "Region",
-          bottomHelpMessage: "腾讯云存储桶所在地域（如：ap-guangzhou）",
           component: "Input",
           componentProps: {
             placeholder: '请输入腾讯云Region',
           },
         },
         {
-          field: "tencent.BizType",
+          field: "nsfw_check.tencent.BizType",
           label: "BizType",
-          bottomHelpMessage: "腾讯云审核策略（空为默认）",
           component: "Input",
           componentProps: {
             placeholder: '请输入腾讯云BizType',
           },
         },
         {
-          component: "Divider",
-          label: "其他 相关配置",
+          component: "SOFT_GROUP_BEGIN",
+          label: "参数"
+        },
+        {
+          field: "parameters.width",
+          label: "默认宽度",
+          component: "InputNumber",
           componentProps: {
-            orientation: "left",
-            plain: true,
+            min: 64,
+            max: 49152,
+            step: 64,
           },
+        },
+        {
+          field: "parameters.height",
+          label: "默认高度",
+          component: "InputNumber",
+          componentProps: {
+            min: 64,
+            max: 49152,
+            step: 64,
+          },
+        },
+        {
+          field: "parameters.scale",
+          label: "提示引导",
+          component: "InputNumber",
+          componentProps: {
+            min: 0,
+            max: 10,
+            step: 0.1,
+          },
+        },
+        {
+          field: "parameters.sampler",
+          label: "采样方法",
+          component: "Select",
+          componentProps: {
+            options: [
+              { label: "Euler Ancestral", value: "k_euler_ancestral" },
+              { label: "DPM++ 2S Ancestral", value: "k_dpmpp_2s_ancestral" },
+              { label: "DPM++ 2M SDE", value: "k_dpmpp_2m_sde" },
+              { label: "Euler", value: "k_euler" },
+              { label: "DPM++ 2M", value: "k_dpmpp_2m" },
+              { label: "DPM++ SDE", value: "k_dpmpp_sde" }
+            ],
+          },
+        },
+        {
+          field: "parameters.steps",
+          label: "迭代步数",
+          component: "InputNumber",
+          componentProps: {
+            min: 1,
+            max: 50,
+            step: 1,
+          },
+        },
+        {
+          field: "parameters.cfg_rescale",
+          label: "重绘比例",
+          component: "InputNumber",
+          componentProps: {
+            min: 0,
+            max: 1,
+            step: 0.01,
+          },
+        },
+        {
+          field: "parameters.noise_schedule",
+          label: "降噪方法",
+          component: "Select",
+          componentProps: {
+            options: [
+              { label: "karras", value: "karras" },
+              { label: "exponential", value: "exponential" },
+              { label: "polyexponential", value: "polyexponential" }
+            ],
+          },
+        },
+        {
+          field: "parameters.negative_prompt",
+          label: "默认负面",
+          component: "Input",
+          componentProps: {
+            placeholder: '请输入默认负面提示词',
+          },
+        },
+        {
+          component: "SOFT_GROUP_BEGIN",
+          label: "其他"
         },
         {
           field: "forward_msg",
           label: "合并转发图片",
-          bottomHelpMessage: "以合并转发方式发送图片",
           component: "Switch",
         },
       ],

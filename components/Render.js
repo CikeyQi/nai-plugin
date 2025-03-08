@@ -24,8 +24,8 @@ const Render = {
             if (package_json.version) {
                 currentVersion = package_json.version
             }
-        } catch (err) {
-            logger.mark(logger.blue('[NAI PLUGIN]'), logger.cyan(`读取package.json失败`), logger.red(err));
+        } catch (error) {
+            logger.mark(logger.blue('[NAI PLUGIN]'), logger.cyan(`读取package.json失败`), logger.red(error));
         }
         return e.runtime.render('nai-plugin', path, params, {
             retType: cfg.retMsgId ? 'msgId' : 'default',

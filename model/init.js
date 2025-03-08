@@ -1,37 +1,58 @@
-import fs from 'fs'
-import Config from '../components/Config.js'
-import { pluginRoot } from '../model/path.js'
+import fs from 'fs';
+import Config from '../components/Config.js';
+import { pluginRoot } from '../model/path.js';
 
 class Init {
   constructor() {
-    this.initConfig()
+    this.initConfig();
   }
 
   initConfig() {
-    const config_default_path = `${pluginRoot}/config/config_default.yaml`
-    if (!fs.existsSync(config_default_path)) {
-      logger.mark(logger.blue('[NAI PLUGIN]'), logger.cyan(`默认设置文件不存在，请检查或重新安装插件`));
-      return true
+    const configDefaultPath = `${pluginRoot}/config/config_default.yaml`;
+    const configPath = `${pluginRoot}/config/config/config.yaml`;
+
+    if (!fs.existsSync(configDefaultPath)) {
+      logger.mark(logger.blue('[NAI PLUGIN]'), logger.cyan('默认设置文件不存在，请检查或重新安装插件'));
+      return;
     }
-    const config_path = `${pluginRoot}/config/config/config.yaml`
-    if (!fs.existsSync(config_path)) {
-      logger.mark(logger.blue('[NAI PLUGIN]'), logger.cyan(`设置文件不存在，将使用默认设置文件`));
-      fs.copyFileSync(config_default_path, config_path)
+
+    if (!fs.existsSync(configPath)) {
+      logger.mark(logger.blue('[NAI PLUGIN]'), logger.cyan('设置文件不存在，将使用默认设置文件'));
+      fs.copyFileSync(configDefaultPath, configPath);
     }
-    const config_default_yaml = Config.getDefConfig()
-    const config_yaml = Config.getConfig()
-    for (const key in config_default_yaml) {
-      if (!(key in config_yaml)) {
-        config_yaml[key] = config_default_yaml[key]
+
+    const configDefault = Config.getDefConfig();
+    const config = Config.getConfig();
+
+    const mergedConfig = this.mergeConfigs(configDefault, config);
+
+    Config.setConfig(mergedConfig);
+  }
+
+  mergeConfigs(defaultConfig, userConfig) {
+    const merged = { ...userConfig };
+
+    Object.keys(defaultConfig).forEach((key) => {
+      if (typeof defaultConfig[key] === 'object' && defaultConfig[key] !== null && !Array.isArray(defaultConfig[key])) {
+        if (!merged[key]) {
+          merged[key] = {};
+        }
+        merged[key] = this.mergeConfigs(defaultConfig[key], merged[key]);
+      } else {
+        if (!(key in merged)) {
+          merged[key] = defaultConfig[key];
+        }
       }
-    }
-    for (const key in config_yaml) {
-      if (!(key in config_default_yaml)) {
-        delete config_yaml[key]
+    });
+
+    Object.keys(merged).forEach((key) => {
+      if (!(key in defaultConfig)) {
+        delete merged[key];
       }
-    }
-    Config.setConfig(config_yaml)
+    });
+
+    return merged;
   }
 }
 
-export default new Init()
+export default new Init();
