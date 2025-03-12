@@ -14,7 +14,7 @@ const baseHeaders = {
 
 const tierMap = ['Paper', 'Tablet', 'Scroll', 'Opus']
 
-export class userInfo extends plugin {
+export class User extends plugin {
   constructor() {
     super({
       name: 'nai-账户状态',
@@ -24,17 +24,17 @@ export class userInfo extends plugin {
       rule: [
         {
           reg: '^[/#]nai --info$',
-          fnc: 'userInfo'
+          fnc: 'info'
         },
         {
           reg: '^[/#]nai --reload$',
-          fnc: 'refreshToken'
+          fnc: 'refresh'
         }
       ]
     })
   }
 
-  async userInfo(e) {
+  async info(e) {
     const config = Config.getConfig()
     const { novelai_token: tokens, proxy: proxyConfig, reverse_proxy } = config
 
@@ -69,7 +69,7 @@ export class userInfo extends plugin {
     return true
   }
 
-  async refreshToken(e) {
+  async refresh(e) {
     await e.reply('正在从配置文件中读取Token检查可用性，请稍后...')
     await queue.init(e)
     e.reply(`已刷新Token状态，当前共有 ${queue.list.length} 个Token可用`)

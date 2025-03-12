@@ -62,7 +62,8 @@ class QueueList {
                         headers: { Authorization: `Bearer ${token}` },
                         httpsAgent: agent
                     });
-                    return data.subscription.active ? new TaskQueue(token) : null;
+                    const { active, trainingStepsLeft: { fixedTrainingStepsLeft, purchasedTrainingSteps } } = data.subscription;
+                    return (active || purchasedTrainingSteps > 0 || fixedTrainingStepsLeft > 0) ? new TaskQueue(token) : null;
                 } catch (error) {
                     logger.mark(logger.blue('[NAI PLUGIN]'), logger.cyan(`Token初始化失败`), logger.red(error));
                     return null;

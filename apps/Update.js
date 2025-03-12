@@ -13,7 +13,7 @@ let uping = false
 /**
  * 处理插件更新
  */
-export class update extends plugin {
+export class Update extends plugin {
   constructor () {
     super({
       name: 'Nai-更新插件',

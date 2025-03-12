@@ -1,6 +1,6 @@
 import plugin from '../../../lib/plugins/plugin.js'
 
-export class preset extends plugin {
+export class Preset extends plugin {
     constructor() {
         super({
             name: 'nai-预设',

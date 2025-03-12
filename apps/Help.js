@@ -3,7 +3,7 @@ import Render from '../components/Render.js'
 import { style } from '../resources/help/imgs/config.js'
 import _ from 'lodash'
 
-export class help extends plugin {
+export class Help extends plugin {
     constructor() {
         super({
             /** 功能名称 */
