@@ -72,22 +72,34 @@ async function getPicture(param, user, type, token) {
   const { base_url } = Config.getConfig().reverse_proxy;
   const mergeData = _.merge({}, defaultParam[type], param);
 
-  logger.mark(logger.blue('[NAI PLUGIN]'), logger.cyan(`用户 ${user} 参数：`), mergeData);
-
   const { free_mode, proxy } = Config.getConfig();
   const agent = proxy.enable && new HttpsProxyAgent(`http://${proxy.host}:${proxy.port}`);
 
-  const { width, height, steps } = mergeData.parameters;
+  const roundTo64 = v => Math.round(v / 64) * 64 || 64;
+  let width = roundTo64(mergeData.parameters.width);
+  let height = roundTo64(mergeData.parameters.height);
 
-  if ((width * height) > (free_mode ? 1048576 : 3145728)) {
-    throw new Error(
-      `图像尺寸超过${free_mode ? '免费模式' : ''}限制，请减小图像尺寸${free_mode ? '，或关闭免费模式' : ''}`
-    );
+  const maxArea = free_mode ? 1048576 : 3145728;
+  let area = width * height;
+  if (area > maxArea) {
+    const ratio = width / height;
+    const scale = Math.sqrt(maxArea / area);
+    width = roundTo64(width * scale);
+    height = roundTo64(width / ratio);
+
+    while ((width * height) > maxArea) {
+      width -= 64;
+      height = roundTo64(width / ratio);
+    }
+  }
+  mergeData.parameters.width = Math.max(width, 64);
+  mergeData.parameters.height = Math.max(height, 64);
+
+  if (free_mode) {
+    mergeData.parameters.steps = Math.min(mergeData.parameters.steps, 28);
   }
 
-  if (free_mode && steps > 28) {
-    throw new Error('迭代步数超过免费模式限制，请减小迭代步数，或关闭免费模式');
-  }
+  logger.mark(logger.blue('[NAI PLUGIN]'), logger.cyan(`用户 ${user} 参数：`), mergeData);
 
   try {
     const response = await axios.post(`${base_url}/ai/generate-image`, mergeData, {

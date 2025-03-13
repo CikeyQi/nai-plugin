@@ -30,27 +30,23 @@ export class Image extends plugin {
       type: 'image'
     }))
 
-    const preset = JSON.parse(await redis.get(`nai:preset:${e.user_id}`)) || {}
-    for (const key in preset) {
-      if (msg.includes(key)) {
-        msg = msg.replace(key, preset[key])
-      }
-    }
+    const preset = JSON.parse(await redis.get(`nai:preset:${e.user_id}`)) || {};
+    msg = Object.entries(preset)
+      .sort(([a], [b]) => b.length - a.length)
+      .reduce((s, [k, v]) => s.replace(new RegExp(k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'), v), msg);
 
     try {
       const param = await handle(msg)
       const buffer = Buffer.from(await url2Base64(e.img[0]), 'base64')
 
       let { width, height } = sizeOf(buffer)
-      const scale = Math.max(width / 1024, height / 1024)
-      const resize = (v, s) => Math.floor((s > 1 ? v / s : v) / 64) * 64
 
       param.parameters = {
         ...param.parameters,
         image: await url2Base64(e.img[0]),
         ...(e.img[1] && { reference_image: await url2Base64(e.img[1]) }),
-        width: resize(width, scale),
-        height: resize(height, scale),
+        width: width,
+        height: height,
         extra_noise_seed: param.parameters.seed
       }
 

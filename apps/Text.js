@@ -28,12 +28,10 @@ export class Text extends plugin {
       type: 'text'
     }))
 
-    const preset = JSON.parse(await redis.get(`nai:preset:${e.user_id}`)) || {}
-    for (const key in preset) {
-      if (msg.includes(key)) {
-        msg = msg.replace(key, preset[key])
-      }
-    }
+    const preset = JSON.parse(await redis.get(`nai:preset:${e.user_id}`)) || {};
+    msg = Object.entries(preset)
+      .sort(([a], [b]) => b.length - a.length)
+      .reduce((s, [k, v]) => s.replace(new RegExp(k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'), v), msg);
 
     try {
       const param = await handle(msg)
