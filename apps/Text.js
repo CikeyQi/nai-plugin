@@ -12,7 +12,7 @@ export class Text extends plugin {
       event: 'message',
       priority: 1009,
       rule: [{
-        reg: '^[/#]draw(.*)',
+        reg: '^[/#]draw([\\s\\S]*)',
         fnc: 'text'
       }]
     })

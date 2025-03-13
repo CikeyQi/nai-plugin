@@ -13,7 +13,7 @@ export class Image extends plugin {
       event: 'message',
       priority: 1009,
       rule: [{
-        reg: '^[/#]image(.*)',
+        reg: '^[/#]image([\\s\\S]*)',
         fnc: 'image'
       }]
     })

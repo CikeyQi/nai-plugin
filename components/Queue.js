@@ -70,7 +70,7 @@ class QueueList {
                 }
             }))).filter(Boolean);
         } catch (error) {
-            logger.error('队列初始化失败:', error);
+            logger.mark(logger.blue('[NAI PLUGIN]'), logger.cyan(`队列初始化失败`), logger.red(error));
         }
     }
 

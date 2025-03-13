@@ -9,7 +9,7 @@ export class Preset extends plugin {
             priority: 1009,
             rule: [
                 {
-                    reg: '^[/#]pset(?: --(add|find|del))?(?:\\s+(.*))?$',
+                    reg: '^[/#]pset(?: --(add|find|del))?(?:\\s+([\\s\\S]*))?$',
                     fnc: 'preset'
                 }
             ]

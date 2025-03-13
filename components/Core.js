@@ -77,14 +77,16 @@ async function getPicture(param, user, type, token) {
   const { free_mode, proxy } = Config.getConfig();
   const agent = proxy.enable && new HttpsProxyAgent(`http://${proxy.host}:${proxy.port}`);
 
-  const { width, height } = mergeData.parameters;
+  const { width, height, steps } = mergeData.parameters;
 
   if ((width * height) > (free_mode ? 1048576 : 3145728)) {
     throw new Error(
-      free_mode
-        ? '图像尺寸超过免费模式限制，请减小图像尺寸，或关闭免费模式'
-        : '图像尺寸超过限制，请减小图像尺寸'
+      `图像尺寸超过${free_mode ? '免费模式' : ''}限制，请减小图像尺寸${free_mode ? '，或关闭免费模式' : ''}`
     );
+  }
+
+  if (free_mode && steps > 28) {
+    throw new Error('迭代步数超过免费模式限制，请减小迭代步数，或关闭免费模式');
   }
 
   try {
