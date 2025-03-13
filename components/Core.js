@@ -50,7 +50,7 @@ const defaultParam = {
   image: {
     input: "",
     model: "nai-diffusion-4-full",
-    action: "image",
+    action: "img2img",
     parameters: {
       ...commonParameters,
       strength: 0.7,
