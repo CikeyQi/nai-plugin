@@ -22,21 +22,18 @@ export class Find extends plugin {
         const imgDir = path.join(pluginResources, 'userPic', userId)
         const imageId = e.msg.match(/\d+/)?.[0]
 
-        const errors = {
-            noDir: !fs.existsSync(imgDir) && '发现你未生成过图片，请先生成图片',
-            noId: !imageId && '图片ID不能为空',
-            noFile: imageId && !fs.existsSync(path.join(imgDir, `${imageId}.png`)) && `没有找到ID为[${imageId}]的图片`
-        }
+        const errors = [
+            imageId && !fs.existsSync(imgDir) && '发现你未生成过图片，请使用/draw 命令进行绘制',
+            imageId && !fs.existsSync(path.join(imgDir, `${imageId}.png`)) && `没有找到 ID 为 ${imageId} 的图片`
+        ].find(Boolean)
 
-        if (Object.values(errors).some(Boolean)) {
-            return await e.reply(errors.find(v => v) || '未知错误')
-        }
+        if (errors) return await e.reply(errors)
 
         try {
             const base64 = fs.readFileSync(path.join(imgDir, `${imageId}.png`), 'base64')
             await e.reply([
-                `找到了ID为[${imageId}]的图片，正在发送中...`,
-                { ...segment.image("base64://" + base64), origin: true }
+                `找到了 ID 为 ${imageId} 的图片，正在发送中...`,
+                { ...segment.image(`base64://${base64}`), origin: true }
             ])
         } catch (error) {
             logger.mark(logger.blue('[NAI PLUGIN]'), logger.cyan(`获取本地图片失败`), logger.red(error));
