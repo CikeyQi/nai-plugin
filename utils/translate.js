@@ -45,7 +45,7 @@ const ERROR_MAP = {
 const TRANSLATE_STRATEGIES = {
     baidu: {
         handler: async (keyword, config) => {
-            const { appid, appkey } = config.translate
+            const { appid, appkey } = config.translate.baidu
             const salt = crypto.randomBytes(16).toString('hex').slice(0, 16)
             const sign = crypto
                 .createHash('md5')
