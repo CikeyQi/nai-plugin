@@ -61,6 +61,14 @@ export function supportGuoba() {
           },
         },
         {
+          field: "model",
+          label: "模型名称",
+          component: "Input",
+          componentProps: {
+            placeholder: '请输入要使用的模型名称',
+          },
+        },
+        {
           field: "free_mode",
           label: "免费模式",
           component: "Switch",

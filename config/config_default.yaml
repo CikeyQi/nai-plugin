@@ -1,5 +1,6 @@
 novelai_token: []
 use_token: 0
+model: nai-diffusion-4-full
 proxy:
   enable: false
   host: 127.0.0.1

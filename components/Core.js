@@ -43,13 +43,13 @@ const commonParameters = {
 const defaultParam = {
   text: {
     input: "",
-    model: "nai-diffusion-4-full",
+    model: await Config.getConfig().model,
     action: "generate",
     parameters: commonParameters
   },
   image: {
     input: "",
-    model: "nai-diffusion-4-full",
+    model: await Config.getConfig().model,
     action: "img2img",
     parameters: {
       ...commonParameters,
