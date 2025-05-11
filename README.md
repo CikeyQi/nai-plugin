@@ -55,7 +55,7 @@ pnpm install --filter=nai-plugin
 
 ## 功能列表
 
-请使用 `#绘画帮助` 获取完整帮助
+请使用 `/nai --help` 获取完整帮助
 
 - [x] 基本生成图片
 - [x] 绑定画风
